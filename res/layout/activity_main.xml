@@ -11,6 +11,23 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:text="@string/hello_world"
+        android:id="@+id/main_textview_helloworld" />
+    
+    <Button 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="Send"
+        android:id="@+id/send"
+        android:layout_below="@id/main_textview_helloworld"/>
+    
+    <Button 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="Clear"
+        android:id="@+id/clear"
+        android:layout_below="@id/send"/>
 
 </RelativeLayout>
