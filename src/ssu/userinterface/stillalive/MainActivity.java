@@ -1,6 +1,8 @@
 package ssu.userinterface.stillalive;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -8,20 +10,27 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class MainActivity extends GCMActivity {
-	
+
 	static final String TAG = "MainActivity";
 
 	Context context;
 	TextView textView;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		context = getApplicationContext();
 		textView = (TextView) findViewById(R.id.main_textview_helloworld);
+
+		SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
+		Log.d(TAG, pref.getString("accessToken", ""));
+		if (pref.getString("accessToken", "").equals("")) {
+			Intent i = new Intent(context, SignInActivity.class);
+			startActivity(i);
+			return;
+		}
 	}
 
 	@Override
@@ -42,5 +51,5 @@ public class MainActivity extends GCMActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 }

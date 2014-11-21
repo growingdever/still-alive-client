@@ -146,7 +146,7 @@ public class GCMActivity extends Activity {
 	    
 	    Log.d(GCMActivity_TAG, "storeRegistrationId");
 	    if( onRegistListener != null ) {
-	    	onRegistListener.OnRegistGCM();
+	    	onRegistListener.OnRegist();
 	    }
 	}
 	
