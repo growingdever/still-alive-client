@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class SignInActivity extends GCMActivity {
 
@@ -36,7 +37,7 @@ public class SignInActivity extends GCMActivity {
 	public void OnClickSignIn(View view) {
 		String id = _editTextID.getText().toString();
 		String password = _editTextPassword.getText().toString();
-
+		Toast.makeText(getApplicationContext(), "µø¿€", Toast.LENGTH_LONG).show();
 		if (!id.equals("") && !password.equals("")) {
 			Hashtable<String, String> parameters = new Hashtable<String, String>();
 			parameters.put("userid", id);

@@ -46,6 +46,10 @@ public class GCMActivity extends Activity {
 	    checkPlayServices();
 	}
 	
+    
+    /*
+     * Check GCM Service Available Device.
+     */
     protected boolean checkPlayServices() {
 	    int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 	    if (resultCode != ConnectionResult.SUCCESS) {
@@ -61,6 +65,7 @@ public class GCMActivity extends Activity {
 	    return true;
 	}
 	
+    
 	protected String getRegistrationId(Context context) {
 	    final SharedPreferences prefs = getGCMPreferences(context);
 	    String registrationId = prefs.getString(PROPERTY_REG_ID, "");
