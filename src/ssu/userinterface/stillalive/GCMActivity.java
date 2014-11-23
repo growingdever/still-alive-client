@@ -13,9 +13,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 public class GCMActivity extends Activity {
 	
@@ -152,37 +150,6 @@ public class GCMActivity extends Activity {
 	    Log.d(GCMActivity_TAG, "storeRegistrationId");
 	    if( onRegistListener != null ) {
 	    	onRegistListener.OnRegist();
-	    }
-	}
-	
-	public void onClick(final View view) {
-	    if (view == findViewById(R.id.send)) {
-	        new AsyncTask<Void, Void, String>() {
-	            @Override
-	            protected String doInBackground(Void... params) {
-	                String msg = "";
-	                try {
-	                    Bundle data = new Bundle();
-	                        data.putString("my_message", "Hello World");
-	                        data.putString("my_action",
-	                                "com.google.android.gcm.demo.app.ECHO_NOW");
-	                        String id = Integer.toString(msgId.incrementAndGet());
-	                        gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
-	                        msg = "Sent message";
-	                } catch (IOException ex) {
-	                    msg = "Error :" + ex.getMessage();
-	                }
-	                
-	                return msg;
-	            }
-
-	            @Override
-	            protected void onPostExecute(String msg) {
-	            	
-	            }
-	        }.execute(null, null, null);
-	    } else if (view == findViewById(R.id.clear)) {
-	    	
 	    }
 	}
 	

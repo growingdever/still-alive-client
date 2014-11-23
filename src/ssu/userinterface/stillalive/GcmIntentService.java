@@ -1,5 +1,7 @@
 package ssu.userinterface.stillalive;
 
+import ssu.userinterface.stillalive.main.MainActivity;
+
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.app.IntentService;
