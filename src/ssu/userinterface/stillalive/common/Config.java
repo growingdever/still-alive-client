@@ -1,4 +1,4 @@
-package ssu.userinterface.common;
+package ssu.userinterface.stillalive.common;
 
 public class Config {
 	public static final String HOST = "http://211.110.33.59:7778";

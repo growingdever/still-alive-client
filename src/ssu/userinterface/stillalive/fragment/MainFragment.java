@@ -1,7 +1,7 @@
 package ssu.userinterface.stillalive.fragment;
 
-import ssu.userinterface.common.Config;
-import ssu.userinterface.common.TimeChecker;
+import ssu.userinterface.stillalive.common.Config;
+import ssu.userinterface.stillalive.common.TimeChecker;
 import ssu.userinterface.stillalive.R;
 import android.app.Fragment;
 import android.app.FragmentManager;

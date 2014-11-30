@@ -7,8 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ssu.userinterface.common.Config;
-import ssu.userinterface.common.HTTPHelper;
+import ssu.userinterface.stillalive.common.Config;
+import ssu.userinterface.stillalive.common.HTTPHelper;
 import ssu.userinterface.listview.Person;
 import ssu.userinterface.stillalive.R;
 import android.app.Activity;

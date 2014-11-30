@@ -2,17 +2,15 @@ package ssu.userinterface.stillalive.fragment;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ssu.userinterface.common.Config;
-import ssu.userinterface.common.HTTPHelper;
-import ssu.userinterface.common.TimeChecker;
-import ssu.userinterface.common.HTTPHelper.OnResponseListener;
+import ssu.userinterface.stillalive.common.Config;
+import ssu.userinterface.stillalive.common.HTTPHelper;
+import ssu.userinterface.stillalive.common.TimeChecker;
+import ssu.userinterface.stillalive.common.HTTPHelper.OnResponseListener;
 import ssu.userinterface.listview.CustomAdapter;
 import ssu.userinterface.listview.Person;
 import ssu.userinterface.stillalive.R;

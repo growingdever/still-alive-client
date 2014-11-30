@@ -3,7 +3,7 @@
  * 
  */
 
-package ssu.userinterface.common;
+package ssu.userinterface.stillalive.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;

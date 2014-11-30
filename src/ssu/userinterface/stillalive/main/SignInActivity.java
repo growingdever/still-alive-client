@@ -5,19 +5,16 @@ import java.util.Hashtable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ssu.userinterface.common.Config;
-import ssu.userinterface.common.HTTPHelper;
+import ssu.userinterface.stillalive.common.Config;
+import ssu.userinterface.stillalive.common.HTTPHelper;
 import ssu.userinterface.stillalive.GCMActivity;
 import ssu.userinterface.stillalive.R;
-import ssu.userinterface.stillalive.R.id;
-import ssu.userinterface.stillalive.R.layout;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class SignInActivity extends GCMActivity{
 

@@ -3,7 +3,6 @@ package ssu.userinterface.stillalive.main;
 import ssu.userinterface.stillalive.GCMActivity;
 import ssu.userinterface.stillalive.R;
 import ssu.userinterface.stillalive.fragment.MainFragment;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
