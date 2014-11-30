@@ -5,25 +5,6 @@
     android:background="#9DCBB2"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/btn_search_friends"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="친구 찾기" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="친구 수락" />
-    </LinearLayout>
-
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"

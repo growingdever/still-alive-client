@@ -35,7 +35,7 @@ public class FriendListFragment extends Fragment {
 	private static final String TAG = "ListFragment";
 	
 	private ListView friendListView;
-	private CustomAdapter customAdapter;
+	private FriendListAdapter friendListAdapter;
 
 	private ImageButton btnAlive;
 	private Button btnSearchFriends;
@@ -59,22 +59,19 @@ public class FriendListFragment extends Fragment {
 			}
 		});
 		
-		btnSearchFriends = (Button) getView().findViewById(R.id.btn_search_friends);
-		btnSearchFriends.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), SearchFriendsActivity.class);
-				getActivity().startActivity(intent);
-			}
-		});
+//		btnSearchFriends = (Button) getView().findViewById(R.id.btn_search_friends);
+//		btnSearchFriends.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				Intent intent = new Intent(getActivity(), SearchFriendsActivity.class);
+//				getActivity().startActivity(intent);
+//			}
+//		});
+		
+		friendListAdapter = new FriendListAdapter(this.getActivity(), R.layout.listview_row);
 		
 		friendListView = (ListView) getView().findViewById(R.id.listView);
-		customAdapter = new CustomAdapter();
-		//
-		
-		ArrayList<Person> data = new ArrayList<Person>();
-		customAdapter.setData(data);
-		friendListView.setAdapter(customAdapter);
+		friendListView.setAdapter(friendListAdapter);
 		friendListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
@@ -169,8 +166,9 @@ public class FriendListFragment extends Fragment {
 			persons.add(person);
 		}
 		
-		customAdapter.setData(persons);
-		customAdapter.notifyDataSetChanged();
+		friendListAdapter.clear();
+		friendListAdapter.addAll(persons);
+		friendListAdapter.notifyDataSetChanged();
 	}
 
 	private void onFail(JSONObject json) {
