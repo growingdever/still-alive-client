@@ -1,8 +1,8 @@
-package ssu.userinterface.stillalive.main.friendlist;
+package ssu.userinterface.stillalive.main;
 
 public class Person {
 	
-	private int _id= 0 ;
+	private int _id = 0 ;
 	private String _name = "";
 	private String _time = "";
 	

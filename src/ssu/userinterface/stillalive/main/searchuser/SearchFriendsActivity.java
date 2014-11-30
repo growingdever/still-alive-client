@@ -2,7 +2,6 @@ package ssu.userinterface.stillalive.main.searchuser;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,12 +9,10 @@ import org.json.JSONObject;
 
 import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.HTTPHelper;
-import ssu.userinterface.stillalive.main.friendlist.Person;
+import ssu.userinterface.stillalive.main.Person;
 import ssu.userinterface.stillalive.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.app.SearchManager;
-import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,91 +20,35 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
-public class SearchFriendsActivity extends Activity implements OnQueryTextListener {
+public class SearchFriendsActivity extends Activity implements OnQueryTextListener, OnItemClickListener {
 	
 	private static final String TAG = "SearchFriendsActivity";
 	
 	SearchView _searchView;
-	
-	private EditText etSearch;
-	private Button btnSearch;
-	private ListView listView;
-	
-	private ArrayAdapter<String> adapter;
-	private ArrayList<Person> friends = new ArrayList<Person>();
+	ListView _listView;
+	SearchResultAdapter _adapter;
 	
 	@Override 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_friends);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		View view = findViewById(R.id.search_friends_background);
 		view.setAlpha(0.7f);
 		
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		
-		etSearch = (EditText)findViewById(R.id.et_search);
-		btnSearch = (Button)findViewById(R.id.btn_search);
-		listView = (ListView)findViewById(R.id.listView);
-		
-		listView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Person person = friends.get(position);
-				id = person.getId();
-				Toast.makeText(SearchFriendsActivity.this, id+"에게 친구 신청", Toast.LENGTH_SHORT).show();
-				requestFriend(person);
-			}
-			
-		});
-		
-		// 아이디 검색
-		btnSearch.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				final ProgressDialog progressDialog = ProgressDialog.show(SearchFriendsActivity.this,"","잠시만 기다려 주세요.",true);
-				
-				String searchText = etSearch.getText().toString();
-				Hashtable<String, String> parameters = new Hashtable<String, String>();
-				parameters.put("keyword", searchText);
-				
-				HTTPHelper.GET(Config.HOST + "/users/search", parameters,
-						new HTTPHelper.OnResponseListener() {
-							@Override
-							public void OnResponse(String response) {
-								Log.i(TAG, response);
-								progressDialog.dismiss();
-								try {
-									JSONObject json = new JSONObject(response);
-									if (json.getInt("result") == 1) {
-										onSuccess(json);
-									}else{
-										onFail(json);
-									}
-								} catch (JSONException e) {
-									e.printStackTrace();
-								}
-							}
-						});
-			}
-		});
-		
-		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-		listView.setAdapter(adapter);
+		_adapter = new SearchResultAdapter(this, R.layout.search_result_list_row);
+		_listView = (ListView)findViewById(R.id.search_friends_listView);
+		_listView.setOnItemClickListener(this);
+		_listView.setAdapter(_adapter);
 	}
 	
 	
@@ -122,11 +63,6 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 		return super.onCreateOptionsMenu(menu);
 	}
 	
-	void SetUpSearchView(MenuItem menuItem) {
-        
-	}
-	
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle presses on the action bar items
@@ -140,8 +76,7 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 
 
 	private void onSuccess(JSONObject json) throws JSONException {
-		adapter.clear();
-		friends.clear();
+		_adapter.clear();
 		
 		JSONArray jsonArray = json.getJSONArray("data");
 		int size = jsonArray.length();
@@ -153,18 +88,9 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 			Person person = new Person();
 			person.setId(id);
 			person.setName(userID);
-			
-			friends.add(person);
+			_adapter.add(person);
 		}
-		
-		
-		ArrayList<String> data = new ArrayList<String>();
-		for(int i = 0; i < friends.size() ; ++i){
-			data.add(friends.get(i).getName());
-		}
-		
-		adapter.addAll(data);
-		adapter.notifyDataSetChanged();
+		_adapter.notifyDataSetChanged();
 		
 		hideKeyboard();
 	}
@@ -212,16 +138,47 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 
 
 	@Override
-	public boolean onQueryTextChange(String arg0) {
-		// TODO Auto-generated method stub
+	public boolean onQueryTextChange(String query) {
 		return false;
 	}
 
 
 
 	@Override
-	public boolean onQueryTextSubmit(String arg0) {
-		// TODO Auto-generated method stub
+	public boolean onQueryTextSubmit(String query) {
+		final ProgressDialog progressDialog = ProgressDialog.show(SearchFriendsActivity.this,"","잠시만 기다려 주세요.",true);
+		
+		String searchText = query;
+		Hashtable<String, String> parameters = new Hashtable<String, String>();
+		parameters.put("keyword", searchText);
+		
+		HTTPHelper.GET(Config.HOST + "/users/search", parameters,
+				new HTTPHelper.OnResponseListener() {
+					@Override
+					public void OnResponse(String response) {
+						Log.i(TAG, response);
+						progressDialog.dismiss();
+						try {
+							JSONObject json = new JSONObject(response);
+							if (json.getInt("result") == 1) {
+								onSuccess(json);
+							}else{
+								onFail(json);
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				});
 		return false;
+	}
+
+
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		// TODO Auto-generated method stub
+		Person person = _adapter.getItem(position);
+		requestFriend(person);
 	}
 }
