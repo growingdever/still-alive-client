@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 	<fragment
         android:id="@+id/main_fragment"
-        android:name="ssu.userinterface.stillalive.fragment.MainFragment"
+        android:name="ssu.userinterface.stillalive.main.friendlist.FriendListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </RelativeLayout>

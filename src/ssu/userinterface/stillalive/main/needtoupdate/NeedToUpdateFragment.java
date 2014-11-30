@@ -32,11 +32,6 @@ public class NeedToUpdateFragment extends Fragment implements OnClickListener {
 		super.onActivityCreated(savedInstanceState);
 		btnAlive = (ImageButton) getView().findViewById(R.id.btnAlive);
 		btnAlive.setOnClickListener(this);
-		
-		long gapTime = TimeChecker.getInstance().getCurrentGapTimeFromBefore(getActivity());
-		if( gapTime < Config.GAP_TIME ) {
-			SetStateToMain();
-		}
 	}
 
 	@Override
@@ -55,7 +50,7 @@ public class NeedToUpdateFragment extends Fragment implements OnClickListener {
 	
 	void SetStateToMain() {
 		MainActivity parent = (MainActivity) getActivity();
-		parent.SetState(MainActivity.STATE_MAIN);
+		parent.SetState(MainActivity.STATE_FRIEND_LIST);
 	}
 	
 }
