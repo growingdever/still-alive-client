@@ -6,6 +6,7 @@ import ssu.userinterface.stillalive.common.GCMActivity;
 import ssu.userinterface.stillalive.common.TimeChecker;
 import ssu.userinterface.stillalive.main.friendlist.FriendListFragment;
 import ssu.userinterface.stillalive.main.needtoupdate.NeedToUpdateFragment;
+import ssu.userinterface.stillalive.main.searchuser.SearchFriendsActivity;
 import ssu.userinterface.stillalive.main.signin.SignInActivity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -23,8 +24,6 @@ public class MainActivity extends GCMActivity {
 	public static final int STATE_FRIEND_LIST = 1;
 	public static final int STATE_NEED_TO_UPDATE = 2;
 	
-	private Fragment fragment;
-	
 	private int currentState = STATE_FRIEND_LIST;
 
 	@Override
@@ -32,8 +31,6 @@ public class MainActivity extends GCMActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		fragment = getFragmentManager().findFragmentById(R.id.main_fragment);
-		
 		SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
 		Log.d(TAG, pref.getString("accessToken", ""));
 		if (pref.getString("accessToken", "").equals("")) {
@@ -59,6 +56,14 @@ public class MainActivity extends GCMActivity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
+        else if(id == R.id.action_find_user) {
+            Intent intent = new Intent(this, SearchFriendsActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.action_accept_request) {
+
+        }
+
 		return super.onOptionsItemSelected(item);
 	}
 	
