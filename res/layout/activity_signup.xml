@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#6799FF" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Sign Up"
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Don&apos;t worry, always Free!!!" />
+
+    <EditText
+        android:id="@+id/nameText"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/round"
+        android:ems="10"
+        android:hint="Name or Nickname" >
+
+        <requestFocus />
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
+
+        <EditText
+            android:id="@+id/phoneText"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.8"
+            android:background="@drawable/round"
+            android:ems="10"
+            android:hint="phone number" />
+
+        <Button
+            android:id="@+id/givebt"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.15"
+            android:text="check"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+     
+    <EditText
+        android:id="@+id/idText"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round"
+        android:ems="10"
+        android:hint="ID" >
+        
+    </EditText>
+
+     <EditText
+         android:id="@+id/passwordText"
+         android:layout_width="250dp"
+         android:layout_height="35dp"
+         android:layout_gravity="center"
+         android:layout_marginTop="10dp"
+         android:background="@drawable/round"
+         android:ems="10"
+         android:hint="PASSWORD"
+         android:password="true" >
+        
+    </EditText>
+
+     <Button
+         android:id="@+id/signupBT"
+         android:layout_width="130dp"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="35dp"
+         android:layout_marginTop="40dp"
+         android:background="#4374D9"
+         android:onClick="onclickSignUp"
+         android:text="SignUp"
+         android:textSize="25sp" />
+
+</LinearLayout>

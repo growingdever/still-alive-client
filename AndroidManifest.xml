@@ -18,6 +18,8 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="ssu.userinterface.stillalive.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application
         android:allowBackup="true"
@@ -59,6 +61,7 @@
         </receiver>
 
         <service android:name="ssu.userinterface.stillalive.gcm.GcmIntentServicevice" />
+        <activity android:name=".main.signin.SignUpActivity"></activity>
 
     </application>
 
