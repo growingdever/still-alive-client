@@ -29,8 +29,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
-public class FriendListFragment extends Fragment {
+public class FriendListFragment extends Fragment implements OnClickListener, OnItemClickListener {
 	
 	private static final String TAG = "ListFragment";
 	
@@ -52,43 +54,14 @@ public class FriendListFragment extends Fragment {
 		background.setAlpha(0.7f);
 		
 		btnAlive = (ImageButton) getView().findViewById(R.id.btnAlive);
-		btnAlive.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				TimeChecker.getInstance().setCurrentTime(getActivity());
-				Toast.makeText(getActivity(), "Alive", Toast.LENGTH_SHORT).show();
-				getListFromServer();
-				updateToServer();
-			}
-		});
+		btnAlive.setOnClickListener(this);
 		
-//		btnSearchFriends = (Button) getView().findViewById(R.id.btn_search_friends);
-//		btnSearchFriends.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				Intent intent = new Intent(getActivity(), SearchFriendsActivity.class);
-//				getActivity().startActivity(intent);
-//			}
-//		});
 		
 		friendListAdapter = new FriendListAdapter(this.getActivity(), R.layout.friend_list_row);
 		
 		friendListView = (ListView) getView().findViewById(R.id.listView);
 		friendListView.setAdapter(friendListAdapter);
-		friendListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-				Toast.makeText(getActivity(), "click position : "+position, Toast.LENGTH_SHORT).show();
-			}
-		});
-		friendListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				Toast.makeText(getActivity(), "long click position : "+position, Toast.LENGTH_SHORT).show();
-				return true;
-			}
-		});
+		friendListView.setOnItemClickListener(this);
 	    
 	    getListFromServer();
 	}
@@ -187,5 +160,21 @@ public class FriendListFragment extends Fragment {
 		String minute = dateString.substring(14,16);
 		String second = dateString.substring(17,19);
 		return year+"/"+month+"/"+day+"/"+hour+":"+minute+":"+second;
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		if( v.getId() == R.id.btnAlive ) {
+			TimeChecker.getInstance().setCurrentTime(getActivity());
+			getListFromServer();
+			updateToServer();
+		}
 	}
 }
