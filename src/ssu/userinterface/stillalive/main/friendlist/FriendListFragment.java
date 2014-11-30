@@ -41,7 +41,7 @@ public class FriendListFragment extends Fragment {
 	private Button btnSearchFriends;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedistanceState) {
-		return inflater.inflate(R.layout.fragment_list, container, false);
+		return inflater.inflate(R.layout.fragment_friend_list, container, false);
 	}
 
 	@Override

@@ -15,11 +15,11 @@ import android.widget.ImageButton;
 
 public class NeedToUpdateFragment extends Fragment implements OnClickListener {
 	
-	private static final String TAG = "MainFragment";
+	private static final String TAG = "NeedToUpdateFragment";
 	private ImageButton btnAlive;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedistanceState) {
-		return inflater.inflate(R.layout.fragment_main, container, false);
+		return inflater.inflate(R.layout.fragment_need_to_update, container, false);
 	}
 
 	@Override
