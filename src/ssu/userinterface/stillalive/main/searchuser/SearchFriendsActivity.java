@@ -2,6 +2,7 @@ package ssu.userinterface.stillalive.main.searchuser;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,6 +14,8 @@ import ssu.userinterface.stillalive.main.friendlist.Person;
 import ssu.userinterface.stillalive.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,10 +31,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
-public class SearchFriendsActivity extends Activity{
+public class SearchFriendsActivity extends Activity implements OnQueryTextListener {
+	
 	private static final String TAG = "SearchFriendsActivity";
+	
+	SearchView _searchView;
+	
 	private EditText etSearch;
 	private Button btnSearch;
 	private ListView listView;
@@ -106,8 +115,17 @@ public class SearchFriendsActivity extends Activity{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.search_friends, menu);
+		MenuItem searchItem = menu.findItem(R.id.action_search);
+		_searchView = (SearchView) searchItem.getActionView();
+		_searchView.setOnQueryTextListener(this);
+		
 		return super.onCreateOptionsMenu(menu);
 	}
+	
+	void SetUpSearchView(MenuItem menuItem) {
+        
+	}
+	
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -189,5 +207,21 @@ public class SearchFriendsActivity extends Activity{
 						}
 					}
 				});
+	}
+
+
+
+	@Override
+	public boolean onQueryTextChange(String arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public boolean onQueryTextSubmit(String arg0) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

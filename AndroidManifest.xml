@@ -47,7 +47,8 @@
 		
 		<activity 
             android:name="ssu.userinterface.stillalive.main.searchuser.SearchFriendsActivity"
-            android:theme="@style/AppBaseThemeNoTitle" >
+            android:theme="@style/AppBaseTheme"
+            android:parentActivityName="ssu.userinterface.stillalive.main.MainActivity">
         </activity>
         
         <receiver
