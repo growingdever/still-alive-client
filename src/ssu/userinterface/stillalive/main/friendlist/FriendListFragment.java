@@ -11,12 +11,10 @@ import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.HTTPHelper;
 import ssu.userinterface.stillalive.common.TimeChecker;
 import ssu.userinterface.stillalive.common.HTTPHelper.OnResponseListener;
-import ssu.userinterface.stillalive.main.searchuser.SearchFriendsActivity;
 import ssu.userinterface.stillalive.R;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,12 +23,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 
 public class FriendListFragment extends Fragment implements OnClickListener, OnItemClickListener {
 	
@@ -40,7 +35,6 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 	private FriendListAdapter friendListAdapter;
 
 	private ImageButton btnAlive;
-	private Button btnSearchFriends;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedistanceState) {
 		return inflater.inflate(R.layout.fragment_friend_list, container, false);

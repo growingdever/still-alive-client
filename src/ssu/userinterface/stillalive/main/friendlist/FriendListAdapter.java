@@ -1,16 +1,12 @@
 package ssu.userinterface.stillalive.main.friendlist;
 
-import java.util.ArrayList;
-
 import ssu.userinterface.stillalive.R;
-
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class FriendListAdapter extends ArrayAdapter<Person> {
