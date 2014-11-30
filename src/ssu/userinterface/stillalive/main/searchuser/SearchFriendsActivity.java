@@ -17,6 +17,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -41,6 +43,12 @@ public class SearchFriendsActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_friends);
+		
+		View view = findViewById(R.id.search_friends_background);
+		view.setAlpha(0.7f);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		
 		etSearch = (EditText)findViewById(R.id.et_search);
 		btnSearch = (Button)findViewById(R.id.btn_search);
@@ -93,6 +101,26 @@ public class SearchFriendsActivity extends Activity{
 		listView.setAdapter(adapter);
 	}
 	
+	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.search_friends, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle presses on the action bar items
+	    switch (item.getItemId()) {
+	        case R.id.action_search:
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+
+
 	private void onSuccess(JSONObject json) throws JSONException {
 		adapter.clear();
 		friends.clear();
