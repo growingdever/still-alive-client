@@ -1,8 +1,9 @@
 package ssu.userinterface.stillalive.main;
 
-import ssu.userinterface.stillalive.GCMActivity;
 import ssu.userinterface.stillalive.R;
-import ssu.userinterface.stillalive.fragment.MainFragment;
+import ssu.userinterface.stillalive.common.GCMActivity;
+import ssu.userinterface.stillalive.main.friendlist.FriendListFragment;
+import ssu.userinterface.stillalive.main.signin.SignInActivity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -61,7 +62,7 @@ public class MainActivity extends GCMActivity {
 	}
 	
 	
-	public void setState(int state) {
+	public void SetState(int state) {
 		if( currentState == state) {
 			return;
 		}
@@ -75,7 +76,7 @@ public class MainActivity extends GCMActivity {
 		switch( currentState ) {
 		case STATE_MAIN:
 		default:
-			newFragment = new MainFragment();
+			newFragment = new FriendListFragment();
 			break;
 		}
 		

@@ -1,20 +1,20 @@
-package ssu.userinterface.stillalive.fragment;
+package ssu.userinterface.stillalive.main.needtoupdate;
 
+import ssu.userinterface.stillalive.R;
 import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.TimeChecker;
-import ssu.userinterface.stillalive.R;
+import ssu.userinterface.stillalive.main.MainActivity;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-public class MainFragment extends Fragment {
+public class NeedToUpdateFragment extends Fragment implements OnClickListener {
+	
 	private static final String TAG = "MainFragment";
 	private ImageButton btnAlive;
 
@@ -31,26 +31,31 @@ public class MainFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		btnAlive = (ImageButton) getView().findViewById(R.id.btnAlive);
-		btnAlive.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				TimeChecker.getInstance().setCurrentTime(getActivity());
-				Toast.makeText(getActivity(), "Alive", Toast.LENGTH_SHORT).show();
-				nextFragment();
-			}
-		});
+		btnAlive.setOnClickListener(this);
+		
 		long gapTime = TimeChecker.getInstance().getCurrentGapTimeFromBefore(getActivity());
-		Log.i(TAG, "Gap Time is "+gapTime+" and is < "+Config.GAP_TIME);
-		if(gapTime< Config.GAP_TIME){
-			nextFragment();
+		if( gapTime < Config.GAP_TIME ) {
+			SetStateToMain();
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()) {
+		case R.id.btnAlive:
+			OnClickButtonAlive();
+			break;
 		}
 	}
 	
-	private void nextFragment(){
-		ListFragment fr  = new ListFragment();
-		FragmentManager fm = getFragmentManager();
-		FragmentTransaction fragmentTransaction = fm.beginTransaction();
-		fragmentTransaction.add(android.R.id.content, fr);
-		fragmentTransaction.commit();
+	void OnClickButtonAlive() {
+		TimeChecker.getInstance().setCurrentTime(getActivity());
+		SetStateToMain();		
 	}
+	
+	void SetStateToMain() {
+		MainActivity parent = (MainActivity) getActivity();
+		parent.SetState(MainActivity.STATE_MAIN);
+	}
+	
 }

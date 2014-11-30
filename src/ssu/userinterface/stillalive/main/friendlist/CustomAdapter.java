@@ -1,4 +1,4 @@
-package ssu.userinterface.listview;
+package ssu.userinterface.stillalive.main.friendlist;
 
 import java.util.ArrayList;
 

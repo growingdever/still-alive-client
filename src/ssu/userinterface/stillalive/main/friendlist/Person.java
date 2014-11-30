@@ -1,4 +1,4 @@
-package ssu.userinterface.listview;
+package ssu.userinterface.stillalive.main.friendlist;
 
 public class Person {
 	

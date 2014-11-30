@@ -1,4 +1,4 @@
-package ssu.userinterface.stillalive.fragment;
+package ssu.userinterface.stillalive.main.friendlist;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -11,10 +11,8 @@ import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.HTTPHelper;
 import ssu.userinterface.stillalive.common.TimeChecker;
 import ssu.userinterface.stillalive.common.HTTPHelper.OnResponseListener;
-import ssu.userinterface.listview.CustomAdapter;
-import ssu.userinterface.listview.Person;
+import ssu.userinterface.stillalive.main.searchuser.SearchFriendsActivity;
 import ssu.userinterface.stillalive.R;
-import ssu.userinterface.stillalive.main.SearchFriendsActivity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -32,7 +30,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ListFragment extends Fragment {
+public class FriendListFragment extends Fragment {
 	
 	private static final String TAG = "ListFragment";
 	
@@ -101,7 +99,7 @@ public class ListFragment extends Fragment {
 	}
 	
 	private void prevFragment(){
-		getActivity().getFragmentManager().beginTransaction().remove(ListFragment.this).commit();
+		getActivity().getFragmentManager().beginTransaction().remove(this).commit();
 	}
 	
 	

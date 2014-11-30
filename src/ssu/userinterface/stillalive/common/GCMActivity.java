@@ -1,4 +1,4 @@
-package ssu.userinterface.stillalive;
+package ssu.userinterface.stillalive.common;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;

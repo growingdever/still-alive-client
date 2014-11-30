@@ -1,5 +1,7 @@
-package ssu.userinterface.stillalive;
+package ssu.userinterface.stillalive.gcm;
 
+import ssu.userinterface.stillalive.R;
+import ssu.userinterface.stillalive.R.drawable;
 import ssu.userinterface.stillalive.main.MainActivity;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;

@@ -1,4 +1,4 @@
-package ssu.userinterface.stillalive.main;
+package ssu.userinterface.stillalive.main.searchuser;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.HTTPHelper;
-import ssu.userinterface.listview.Person;
+import ssu.userinterface.stillalive.main.friendlist.Person;
 import ssu.userinterface.stillalive.R;
 import android.app.Activity;
 import android.app.ProgressDialog;

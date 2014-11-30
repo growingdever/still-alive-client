@@ -1,4 +1,4 @@
-package ssu.userinterface.stillalive.main;
+package ssu.userinterface.stillalive.main.signin;
 
 import java.util.Hashtable;
 
@@ -6,8 +6,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ssu.userinterface.stillalive.common.Config;
+import ssu.userinterface.stillalive.common.GCMActivity;
 import ssu.userinterface.stillalive.common.HTTPHelper;
-import ssu.userinterface.stillalive.GCMActivity;
+import ssu.userinterface.stillalive.main.MainActivity;
 import ssu.userinterface.stillalive.R;
 import android.content.Intent;
 import android.content.SharedPreferences;

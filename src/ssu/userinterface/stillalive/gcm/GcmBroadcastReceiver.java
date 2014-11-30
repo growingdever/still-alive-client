@@ -1,4 +1,4 @@
-package ssu.userinterface.stillalive;
+package ssu.userinterface.stillalive.gcm;
 
 import android.app.Activity;
 import android.content.ComponentName;
