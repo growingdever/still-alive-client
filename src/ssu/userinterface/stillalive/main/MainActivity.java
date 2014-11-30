@@ -5,6 +5,7 @@ import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.GCMActivity;
 import ssu.userinterface.stillalive.common.TimeChecker;
 import ssu.userinterface.stillalive.main.friendlist.FriendListFragment;
+import ssu.userinterface.stillalive.main.inbox.InboxActivity;
 import ssu.userinterface.stillalive.main.needtoupdate.NeedToUpdateFragment;
 import ssu.userinterface.stillalive.main.searchuser.SearchFriendsActivity;
 import ssu.userinterface.stillalive.main.signin.SignInActivity;
@@ -58,7 +59,8 @@ public class MainActivity extends GCMActivity {
             startActivity(intent);
         }
         else if(id == R.id.action_accept_request) {
-
+        	Intent intent = new Intent(this, InboxActivity.class);
+            startActivity(intent);
         }
 
 		return super.onOptionsItemSelected(item);

@@ -51,6 +51,12 @@
             android:parentActivityName="ssu.userinterface.stillalive.main.MainActivity">
         </activity>
         
+		<activity 
+            android:name="ssu.userinterface.stillalive.main.inbox.InboxActivity"
+            android:theme="@style/AppBaseTheme"
+            android:parentActivityName="ssu.userinterface.stillalive.main.MainActivity">
+        </activity>
+        
         <receiver
             android:name="ssu.userinterface.stillalive.gcm.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
