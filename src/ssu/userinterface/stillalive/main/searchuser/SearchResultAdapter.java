@@ -27,7 +27,7 @@ public class SearchResultAdapter extends ArrayAdapter<Person> {
             
             Person person = getItem(position);
             
-            TextView textViewID = (TextView) view.findViewById(R.id.friend_list_row_textview_id);
+            TextView textViewID = (TextView) view.findViewById(R.id.search_friends_result_list_row_textview_id);
             textViewID.setText(person.getName());
         }
 		

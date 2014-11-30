@@ -7,12 +7,20 @@
     android:padding="20dp">
 
     <TextView
-        android:id="@+id/friend_list_row_textview_id"
+        android:id="@+id/search_friends_result_list_row_textview_id"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:textColor="@color/list_row_text_color2"
         android:textSize="20sp" />
+    
+    <ImageView 
+        android:id="@+id/search_friends_result_list_row_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/plane"/>
 
 </RelativeLayout>
