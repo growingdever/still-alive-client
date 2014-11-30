@@ -48,6 +48,9 @@ public class FriendListFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		
+		View background = getView().findViewById(R.id.fragment_friend_list_backround);
+		background.setAlpha(0.7f);
+		
 		btnAlive = (ImageButton) getView().findViewById(R.id.btnAlive);
 		btnAlive.setOnClickListener(new OnClickListener() {
 			@Override
