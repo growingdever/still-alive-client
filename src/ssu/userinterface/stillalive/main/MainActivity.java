@@ -41,8 +41,6 @@ public class MainActivity extends GCMActivity {
 			startActivity(i);
 			return;
 		}
-		
-		changeFragmentByState();
 	}
 
 	@Override
@@ -102,7 +100,7 @@ public class MainActivity extends GCMActivity {
 		}
 		
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction.replace(fragment.getId(), newFragment);
+		transaction.replace(R.id.main_fragment_container, newFragment);
 		transaction.addToBackStack(null);
 		transaction.commit();
 	}

@@ -45,7 +45,7 @@ public class NeedToUpdateFragment extends Fragment implements OnClickListener {
 	
 	void OnClickButtonAlive() {
 		TimeChecker.getInstance().setCurrentTime(getActivity());
-		SetStateToMain();		
+		SetStateToMain();
 	}
 	
 	void SetStateToMain() {

@@ -93,16 +93,6 @@ public class FriendListFragment extends Fragment {
 	    getListFromServer();
 	}
 
-	@Override
-	public void onResume() {
-		super.onResume();
-	}
-	
-	private void prevFragment(){
-		getActivity().getFragmentManager().beginTransaction().remove(this).commit();
-	}
-	
-	
 	//친구 상태 조회
 	private void getListFromServer(){
 		final ProgressDialog progressDialog = ProgressDialog.show(getActivity(),"","잠시만 기다려 주세요.",true);
