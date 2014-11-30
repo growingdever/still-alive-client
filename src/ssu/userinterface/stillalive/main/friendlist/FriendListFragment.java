@@ -71,7 +71,7 @@ public class FriendListFragment extends Fragment {
 //			}
 //		});
 		
-		friendListAdapter = new FriendListAdapter(this.getActivity(), R.layout.listview_row);
+		friendListAdapter = new FriendListAdapter(this.getActivity(), R.layout.friend_list_row);
 		
 		friendListView = (ListView) getView().findViewById(R.id.listView);
 		friendListView.setAdapter(friendListAdapter);
