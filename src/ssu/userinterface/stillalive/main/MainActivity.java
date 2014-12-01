@@ -35,8 +35,10 @@ public class MainActivity extends GCMActivity {
 		SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
 		Log.d(TAG, pref.getString("accessToken", ""));
 		if (pref.getString("accessToken", "").equals("")) {
-			Intent i = new Intent(getApplicationContext(), SignInActivity.class);
-			startActivity(i);
+			Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			startActivity(intent);
+			finish();
 			return;
 		}
 	}
@@ -54,6 +56,9 @@ public class MainActivity extends GCMActivity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		else if(id == R.id.action_friend_list) {
+			SetState(STATE_FRIEND_LIST);
+		}
         else if(id == R.id.action_find_user) {
             Intent intent = new Intent(this, SearchFriendsActivity.class);
             startActivity(intent);
@@ -61,6 +66,17 @@ public class MainActivity extends GCMActivity {
         else if(id == R.id.action_accept_request) {
         	Intent intent = new Intent(this, InboxActivity.class);
             startActivity(intent);
+        }
+        else if(id == R.id.action_sign_out) {
+        	SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
+        	SharedPreferences.Editor editor = pref.edit();
+        	editor.putString("accessToken", "");
+        	editor.commit();
+        	
+        	Intent intent = new Intent(this, MainActivity.class);
+        	intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); 
+            startActivity(intent);
+            finish();
         }
 
 		return super.onOptionsItemSelected(item);

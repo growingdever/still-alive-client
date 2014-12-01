@@ -91,11 +91,13 @@ public class SignInActivity extends GCMActivity{
 
 	void OnSuccess() {
 		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(intent);
+		finish();
 	}
+	
 	public void signin(View view){
-		Intent gointent= new Intent(getApplicationContext(),SignUpActivity.class);
+		Intent gointent = new Intent(getApplicationContext(),SignUpActivity.class);
 		startActivity(gointent);
 	}
 

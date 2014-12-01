@@ -4,9 +4,11 @@
     <string name="app_name">StillAlive</string>
     <string name="hello_world">Hello world!</string>
     
-    <string name="action_find_user">친구 찾기</string>
-    <string name="action_accept_request">친구 요청 목록 보기</string>
-    <string name="action_settings">설정</string>
+    <string name="action_friend_list">Friend List</string>
+    <string name="action_find_user">Find Friend</string>
+    <string name="action_accept_request">Inbox</string>
+    <string name="action_settings">Setting</string>
+    <string name="action_sign_out">Sign Out</string>
     
     <string name="title_activity_list">ListActivity</string>
     
