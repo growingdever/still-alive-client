@@ -38,7 +38,13 @@ public class FriendListAdapter extends ArrayAdapter<UserData> {
             long diff = now.getTimeInMillis() - last.getTimeInMillis();
             
             TextView time = (TextView) view.findViewById(R.id.person_time);
-            time.setText((diff / 1000) + " seconds");
+            if( diff / 1000 > 3600) {
+            	time.setText("More than an hour");
+            }
+            else {
+            	time.setText((diff / 1000) + " seconds");
+            }
+            
         }
 		
         return view;
