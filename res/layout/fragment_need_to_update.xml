@@ -7,8 +7,19 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
+    
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="right"
+        android:text="@string/menu_button_guide"
+        android:textSize="16sp"
+        android:textColor="#AAAAAA"/>
 
     <ImageView
+        android:id="@+id/fragment_need_to_update_button_background"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_centerInParent="true"

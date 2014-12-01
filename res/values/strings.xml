@@ -16,5 +16,7 @@
     <string name="update_button">ALIVE!</string>
     <string name="update_button2">PONG!</string>
     <string name="update_button_content_description">Click this button for updating</string>
+    
+    <string name="menu_button_guide">Click top right button\nto look more menu!</string>
 
 </resources>
