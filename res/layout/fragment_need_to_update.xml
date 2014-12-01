@@ -36,5 +36,15 @@
         android:textColor="@color/update_button_text"
         android:textSize="@dimen/update_button_text_size"
         android:textStyle="bold" />
+    
+    <TextView 
+        android:id="@+id/fragment_need_to_update_passed_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_need_to_update_button_background"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:textColor="@color/friend_list_row_time_color"/>
 
 </RelativeLayout>
