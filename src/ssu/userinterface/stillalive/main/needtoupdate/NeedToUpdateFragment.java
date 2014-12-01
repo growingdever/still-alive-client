@@ -11,12 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 
 public class NeedToUpdateFragment extends Fragment implements OnClickListener {
 	
 	private static final String TAG = "NeedToUpdateFragment";
-	private ImageButton btnAlive;
+	private Button btnAlive;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedistanceState) {
 		return inflater.inflate(R.layout.fragment_need_to_update, container, false);
@@ -30,7 +30,7 @@ public class NeedToUpdateFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		btnAlive = (ImageButton) getView().findViewById(R.id.btnAlive);
+		btnAlive = (Button) getView().findViewById(R.id.btnAlive);
 		btnAlive.setOnClickListener(this);
 	}
 
