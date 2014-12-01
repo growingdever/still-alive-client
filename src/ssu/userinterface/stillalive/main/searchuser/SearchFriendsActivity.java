@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.HTTPHelper;
-import ssu.userinterface.stillalive.main.Person;
+import ssu.userinterface.stillalive.main.UserData;
 import ssu.userinterface.stillalive.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -116,10 +116,8 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 			String userID = item.getString("userID");
 			int id = item.getInt("id");
 			
-			Person person = new Person();
-			person.setId(id);
-			person.setName(userID);
-			_adapter.add(person);
+			UserData userdata = new UserData(userID, "01012345678", null);
+			_adapter.add(userdata);
 		}
 		_adapter.notifyDataSetChanged();
 	}
@@ -133,17 +131,17 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// TODO Auto-generated method stub
-		Person person = _adapter.getItem(position);
+		UserData person = _adapter.getItem(position);
 		requestFriend(person);
 	}
 	
 	// 친구 요청
-	private void requestFriend(Person person) {
+	private void requestFriend(UserData userdata) {
 		SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
 		String accessToken = pref.getString("accessToken", "");
 		Hashtable<String, String> parameters = new Hashtable<String, String>();
 		parameters.put("access_token", accessToken);
-		parameters.put("target_userid", String.valueOf(person.getName()));
+		parameters.put("target_userid", String.valueOf(userdata.GetUserID()));
 		HTTPHelper.GET(Config.HOST + "/users/ask", parameters,
 				new HTTPHelper.OnResponseListener() {
 					@Override

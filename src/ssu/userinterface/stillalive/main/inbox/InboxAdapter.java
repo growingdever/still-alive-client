@@ -1,7 +1,6 @@
 package ssu.userinterface.stillalive.main.inbox;
 
 import ssu.userinterface.stillalive.R;
-import ssu.userinterface.stillalive.main.Person;
 import ssu.userinterface.stillalive.main.RequestItem;
 
 import android.content.Context;

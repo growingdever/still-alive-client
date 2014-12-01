@@ -1,6 +1,10 @@
 package ssu.userinterface.stillalive.main.friendlist;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Hashtable;
 
 import org.json.JSONArray;
@@ -11,7 +15,7 @@ import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.HTTPHelper;
 import ssu.userinterface.stillalive.common.TimeChecker;
 import ssu.userinterface.stillalive.common.HTTPHelper.OnResponseListener;
-import ssu.userinterface.stillalive.main.Person;
+import ssu.userinterface.stillalive.main.UserData;
 import ssu.userinterface.stillalive.R;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -24,6 +28,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -35,7 +40,7 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 	private ListView friendListView;
 	private FriendListAdapter friendListAdapter;
 
-	private ImageButton btnAlive;
+	private Button btnAlive;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedistanceState) {
 		return inflater.inflate(R.layout.fragment_friend_list, container, false);
@@ -48,7 +53,7 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 		View background = getView().findViewById(R.id.fragment_friend_list_backround);
 		background.setAlpha(0.7f);
 		
-		btnAlive = (ImageButton) getView().findViewById(R.id.btnAlive);
+		btnAlive = (Button) getView().findViewById(R.id.btnAlive);
 		btnAlive.setOnClickListener(this);
 		
 		
@@ -84,6 +89,9 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		});
@@ -114,31 +122,25 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 			}
 		});
 	}
-	private void onSuccess(JSONObject json) throws JSONException {
-		JSONArray data = json.getJSONArray("data");
-		ArrayList<Person> persons = new ArrayList<Person>();
+	private void onSuccess(JSONObject json) throws JSONException, ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		
+		friendListAdapter.clear();
+
+		JSONArray data = json.getJSONArray("data");
 		int length = data.length();
 		for(int i = 0 ; i < length ; ++i){
 			//{"id":2,"userID":"loki12","updatedAt":"2014-11-23T07:51:57.000Z"}
 			JSONObject item = data.getJSONObject(i);
-			int id = item.getInt("id");
 			String userID = item.getString("userID");
-			String updatedAt = item.getString("updatedAt");
-			String dateString = getStringFromTimeString(updatedAt);
+			Calendar calendar = Calendar.getInstance();
+			Date tmp = formatter.parse(item.getString("updatedAt"));
+			calendar.setTime(tmp);
 			
-			Log.i(TAG, dateString);
-			
-			Person person = new Person();
-			person.setId(id);
-			person.setName(userID);
-			person.setTime(dateString);
-			
-			persons.add(person);
+			UserData person = new UserData(userID, "01012345678", calendar);
+			friendListAdapter.add(person);
 		}
 		
-		friendListAdapter.clear();
-		friendListAdapter.addAll(persons);
 		friendListAdapter.notifyDataSetChanged();
 	}
 
@@ -146,17 +148,6 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 
 	}
 	
-	//yyyy-MM-ddTHH:mm:ss.000Z 
-	private String getStringFromTimeString(String dateString){
-		String year = dateString.substring(0,4);
-		String month = dateString.substring(5,7);
-		String day = dateString.substring(8,10); 
-		String hour = dateString.substring(11,13);
-		String minute = dateString.substring(14,16);
-		String second = dateString.substring(17,19);
-		return year+"/"+month+"/"+day+"/"+hour+":"+minute+":"+second;
-	}
-
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// TODO Auto-generated method stub

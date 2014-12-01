@@ -15,7 +15,6 @@ import ssu.userinterface.stillalive.R;
 import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.HTTPHelper;
 import ssu.userinterface.stillalive.common.HTTPHelper.OnResponseListener;
-import ssu.userinterface.stillalive.main.Person;
 import ssu.userinterface.stillalive.main.RequestItem;
 import ssu.userinterface.stillalive.main.friendlist.FriendListAdapter;
 import ssu.userinterface.stillalive.main.searchuser.SearchResultAdapter;

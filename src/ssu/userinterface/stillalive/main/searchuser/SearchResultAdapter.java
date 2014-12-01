@@ -1,7 +1,7 @@
 package ssu.userinterface.stillalive.main.searchuser;
 
 import ssu.userinterface.stillalive.R;
-import ssu.userinterface.stillalive.main.Person;
+import ssu.userinterface.stillalive.main.UserData;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class SearchResultAdapter extends ArrayAdapter<Person> {
+public class SearchResultAdapter extends ArrayAdapter<UserData> {
 	
 	LayoutInflater _inflater;
 
@@ -25,10 +25,10 @@ public class SearchResultAdapter extends ArrayAdapter<Person> {
         if( view == null ) {
             view = _inflater.inflate(R.layout.search_result_list_row, null);
             
-            Person person = getItem(position);
+            UserData person = getItem(position);
             
             TextView textViewID = (TextView) view.findViewById(R.id.search_friends_result_list_row_textview_id);
-            textViewID.setText(person.getName());
+            textViewID.setText("");
         }
 		
         return view;
