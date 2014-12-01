@@ -50,8 +50,8 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		
-		View background = getView().findViewById(R.id.fragment_friend_list_backround);
-		background.setAlpha(0.7f);
+//		View background = getView().findViewById(R.id.fragment_friend_list_backround);
+//		background.setAlpha(0.7f);
 		
 		btnAlive = (Button) getView().findViewById(R.id.btnAlive);
 		btnAlive.setOnClickListener(this);

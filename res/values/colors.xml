@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <item name="transparent" type="color">#00000000</item>
+    
+    <item name="new_actionbar_background" type="color">#11A8AB</item>
+    
+    <item name="update_button_background" type="color">#66C07A</item>
+    <item name="update_button_text" type="color">#FFFFFF</item>
 
-    <item name="friend_list_row_text_color" type="color">#4D7C90</item>
+    <item name="friend_list_background" type="color">#efefef</item>
+    <item name="friend_list_row_userid_color" type="color">#333333</item>
+    <item name="friend_list_row_time_color" type="color">#E0504A</item>
+    
     <item name="list_row_text_color2" type="color">#333333</item>
 
 </resources>

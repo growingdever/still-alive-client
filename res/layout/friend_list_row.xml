@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:textColor="@color/friend_list_row_text_color"
+        android:textColor="@color/friend_list_row_userid_color"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -22,7 +22,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:textColor="@color/friend_list_row_text_color"
-        android:textSize="10sp" />
+        android:textColor="@color/friend_list_row_time_color"
+        android:textSize="12sp" />
 
 </RelativeLayout>
