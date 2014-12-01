@@ -63,7 +63,7 @@ public class InboxActivity extends Activity implements OnItemClickListener {
 	private void GetListFromServer(){
 		Hashtable<String, String> parameters = new Hashtable<String, String>();
 		parameters.put("access_token", _accessToken);
-		HTTPHelper.GET(Config.HOST + "/received_requests", parameters, new OnResponseListener() {
+		HTTPHelper.GET(Config.HOST + "/users/received_requests", parameters, new OnResponseListener() {
 			@Override
 			public void OnResponse(String response) {
 				try {
