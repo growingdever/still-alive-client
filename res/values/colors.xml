@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <item name="friend_list_row_text_color" type="color">#111111</item>
+    <item name="friend_list_row_text_color" type="color">#4D7C90</item>
     <item name="list_row_text_color2" type="color">#333333</item>
 
 </resources>

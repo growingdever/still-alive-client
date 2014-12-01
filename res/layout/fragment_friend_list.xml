@@ -2,13 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/fragment_friend_list_backround"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_friend_list" >
+        android:background="#DEDFE4" >
     </RelativeLayout>
 
     <LinearLayout
@@ -22,8 +22,23 @@
             android:layout_height="match_parent">
         </ListView>
     </LinearLayout>
+    
+    
+    <Button 
+        android:id="@+id/btnAlive"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:background="#284750"
+        android:text="Pong!"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        />
 
-    <ImageButton
+<!--     <ImageButton
         android:id="@+id/btnAlive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,5 +47,5 @@
         android:src="@drawable/balloon"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp" />
-
+ -->
 </RelativeLayout>

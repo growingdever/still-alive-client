@@ -13,7 +13,8 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:textColor="@color/friend_list_row_text_color"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/person_time"
