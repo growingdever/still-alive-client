@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rowTextView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="40dp"
     android:orientation="horizontal"
     android:padding="20dp">
 
@@ -11,18 +11,17 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
+        android:layout_alignParentTop="true"
         android:textColor="@color/friend_list_row_userid_color"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/person_time"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
         android:textColor="@color/friend_list_row_time_color"
-        android:textSize="12sp" />
+        android:textSize="32sp"/>
 
 </RelativeLayout>

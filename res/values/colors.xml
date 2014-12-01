@@ -3,12 +3,13 @@
     
     <item name="transparent" type="color">#00000000</item>
     
-    <item name="new_actionbar_background" type="color">#11A8AB</item>
+    <item name="new_actionbar_background" type="color">#309BC5</item>
+    <item name="new_actionbar_title_text_color" type="color">#F2F2F2</item>
     
-    <item name="update_button_background" type="color">#66C07A</item>
+    <item name="update_button_background" type="color">#0099CC</item>
     <item name="update_button_text" type="color">#FFFFFF</item>
 
-    <item name="friend_list_background" type="color">#efefef</item>
+    <item name="friend_list_background" type="color">#FEFEFE</item>
     <item name="friend_list_row_userid_color" type="color">#333333</item>
     <item name="friend_list_row_time_color" type="color">#E0504A</item>
     

@@ -39,7 +39,7 @@ public class FriendListAdapter extends ArrayAdapter<UserData> {
             
             TextView time = (TextView) view.findViewById(R.id.person_time);
             if( diff / 1000 > 3600) {
-            	time.setText("More than an hour");
+            	time.setText("1h+");
             }
             else {
             	time.setText((diff / 1000) + " seconds");
