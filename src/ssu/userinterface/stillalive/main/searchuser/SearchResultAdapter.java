@@ -25,10 +25,10 @@ public class SearchResultAdapter extends ArrayAdapter<UserData> {
         if( view == null ) {
             view = _inflater.inflate(R.layout.search_result_list_row, null);
             
-            UserData person = getItem(position);
+            UserData userdata = getItem(position);
             
             TextView textViewID = (TextView) view.findViewById(R.id.search_friends_result_list_row_textview_id);
-            textViewID.setText("");
+            textViewID.setText(userdata.GetUserID());
         }
 		
         return view;

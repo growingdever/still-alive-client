@@ -40,9 +40,6 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 		setContentView(R.layout.activity_search_friends);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
-		View view = findViewById(R.id.search_friends_background);
-		view.setAlpha(0.5f);
-		
 		_adapter = new SearchResultAdapter(this, R.layout.search_result_list_row);
 		_listView = (ListView)findViewById(R.id.search_friends_listView);
 		_listView.setOnItemClickListener(this);
@@ -77,6 +74,8 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 
 	@Override
 	public boolean onQueryTextSubmit(String query) {
+		Log.d(TAG, "onQueryTextSubmit");
+		
 		final ProgressDialog progressDialog = ProgressDialog.show(SearchFriendsActivity.this,"","잠시만 기다려 주세요.",true);
 		
 		String searchText = query;
@@ -103,7 +102,8 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 						Toast.makeText(getApplicationContext(), "아이디를 클릭하여 친구 요청을 보내세요.", Toast.LENGTH_SHORT).show();
 					}
 				});
-		return false;
+		_searchView.clearFocus();
+		return true;
 	}
 	
 	private void onSuccess(JSONObject json) throws JSONException {
