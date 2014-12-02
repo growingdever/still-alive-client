@@ -65,6 +65,13 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 	    
 	    getListFromServer();
 	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		getListFromServer();
+	}
 
 	//친구 상태 조회
 	private void getListFromServer(){
