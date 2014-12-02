@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+<RadioGroup
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="17dp" >
+
+        <RadioButton
+            android:id="@+id/rbutton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:text="Phone call" />
+
+        <RadioButton
+            android:id="@+id/rbutton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sms message" />
+         <RadioButton
+            android:id="@+id/rbutton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kakao talk" />
+         </RadioGroup>
+</LinearLayout>
