@@ -20,7 +20,9 @@ import ssu.userinterface.stillalive.R;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,6 +66,7 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 		friendListView.setOnItemClickListener(this);
 	    
 	    getListFromServer();
+	    
 	}
 
 	//친구 상태 조회
@@ -151,9 +154,12 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// TODO Auto-generated method stub
+		UserData user =friendListAdapter.getItem(position);
+		DialogClickEvent event = new DialogClickEvent(user);
+		event.show(getFragmentManager(), null);
 		
 	}
-
+	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
