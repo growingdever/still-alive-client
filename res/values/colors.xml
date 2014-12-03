@@ -10,7 +10,8 @@
     <item name="update_button_text" type="color">#FFFFFF</item>
 
     <item name="friend_list_background" type="color">#FEFEFE</item>
-    <item name="friend_list_row_userid_color" type="color">#333333</item>
+    <item name="friend_list_row_userid" type="color">#333333</item>
+    <item name="friend_list_row_state_message" type="color">#777777</item>
     <item name="friend_list_row_time_color" type="color">#E0504A</item>
     
     <item name="need_to_update_background" type="color">#FAFAFA</item>

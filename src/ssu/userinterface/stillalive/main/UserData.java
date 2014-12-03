@@ -6,12 +6,14 @@ public class UserData {
 	
 	String _userID;
 	String _phoneNumber;
+	String _stateMessage;
 	Calendar _lastUpdateAt;
 	
 	
-	public UserData(String userid, String phoneNumber, Calendar lastUpdateAt){
+	public UserData(String userid, String phoneNumber, String stateMessage, Calendar lastUpdateAt){
 		_userID = userid;
 		_phoneNumber = phoneNumber;
+		_stateMessage = stateMessage;
 		_lastUpdateAt = lastUpdateAt;
 	}
 	
@@ -21,6 +23,10 @@ public class UserData {
 	
 	public String GetPhoneNumber() {
 		return _phoneNumber;
+	}
+	
+	public String GetStateMessage() {
+		return _stateMessage;
 	}
 	
 	public Calendar GetLastUpdateTime() {

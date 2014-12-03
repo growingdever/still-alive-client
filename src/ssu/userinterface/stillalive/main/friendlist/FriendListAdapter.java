@@ -27,24 +27,30 @@ public class FriendListAdapter extends ArrayAdapter<UserData> {
 		View view = convertView;
         if( view == null ) {
             view = _inflater.inflate(R.layout.friend_list_row, null);
-            
-            UserData userdata = getItem(position);
-            
-            TextView name = (TextView) view.findViewById(R.id.person_name);
-            name.setText(userdata.GetUserID());
-            
-            Calendar now = Calendar.getInstance();
-            Calendar last = userdata.GetLastUpdateTime();
-            long diff = now.getTimeInMillis() - last.getTimeInMillis();
-            
-            TextView time = (TextView) view.findViewById(R.id.person_time);
-            if( diff / 1000 > 3600) {
-            	time.setText("1h+");
-            }
-            else {
-            	time.setText((diff / 1000) + " seconds");
-            }
-            
+        }
+        
+        UserData userdata = getItem(position);
+        
+        TextView textViewUserID = (TextView) view.findViewById(R.id.friend_list_row_textview_userid);
+        textViewUserID.setText(userdata.GetUserID());
+        
+        TextView textViewStateMessage = (TextView) view.findViewById(R.id.friend_list_row_textview_state_message);
+        textViewStateMessage.setText(userdata.GetStateMessage());
+        
+        Calendar now = Calendar.getInstance();
+        Calendar last = userdata.GetLastUpdateTime();
+        long diff = now.getTimeInMillis() - last.getTimeInMillis();
+        
+        TextView time = (TextView) view.findViewById(R.id.friend_list_row_textview_pass_time);
+        
+        long sec = diff / 1000;
+        if( sec >= 3600) {
+        	time.setText("1h+");
+        } else if( sec >= 60 ) {
+        	long min = sec / 60;
+        	time.setText(min + "m");
+        } else {
+        	time.setText(sec + "s");
         }
 		
         return view;

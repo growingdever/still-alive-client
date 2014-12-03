@@ -44,6 +44,9 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 
 	private Button btnAlive;
 	
+	String _accessToken;
+	
+	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedistanceState) {
 		return inflater.inflate(R.layout.fragment_friend_list, container, false);
 	}
@@ -52,8 +55,8 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		
-//		View background = getView().findViewById(R.id.fragment_friend_list_backround);
-//		background.setAlpha(0.7f);
+		SharedPreferences pref = getActivity().getSharedPreferences("default", Context.MODE_PRIVATE);
+		_accessToken = pref.getString("accessToken", "");
 		
 		btnAlive = (Button) getView().findViewById(R.id.btnAlive);
 		btnAlive.setOnClickListener(this);
@@ -107,15 +110,9 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 		});
 	}
 	
-	//상태 업데이트
 	private void updateToServer(){
-		SharedPreferences pref = getActivity().getSharedPreferences("default", Context.MODE_PRIVATE);
-		String accessToken = pref.getString("accessToken", "");
-
 		Hashtable<String, String> parameters = new Hashtable<String, String>();
-		parameters.put("access_token", accessToken);
-		
-		Log.i(TAG,"accessToken : "+accessToken);
+		parameters.put("access_token", _accessToken);
 		
 		HTTPHelper.GET(Config.HOST + "/update", parameters, new OnResponseListener() {
 			@Override
@@ -132,6 +129,7 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 			}
 		});
 	}
+	
 	private void onSuccess(JSONObject json) throws JSONException, ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		
@@ -143,11 +141,11 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 			//{"id":2,"userID":"loki12","updatedAt":"2014-11-23T07:51:57.000Z"}
 			JSONObject item = data.getJSONObject(i);
 			String userID = item.getString("userID");
+			String stateMessage = item.getString("stateMessage");
 			Calendar calendar = Calendar.getInstance();
-			Date tmp = formatter.parse(item.getString("updatedAt"));
-			calendar.setTime(tmp);
+			calendar.setTime(formatter.parse(item.getString("updatedAt")));
 			
-			UserData person = new UserData(userID, "01012345678", calendar);
+			UserData person = new UserData(userID, "01012345678", stateMessage, calendar);
 			friendListAdapter.add(person);
 		}
 		
@@ -155,21 +153,18 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 	}
 
 	private void onFail(JSONObject json) {
-
-	}
-	
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		// TODO Auto-generated method stub
-		UserData user =friendListAdapter.getItem(position);
-		DialogClickEvent event = new DialogClickEvent(user);
-		event.show(getFragmentManager(), null);
 		
 	}
 	
 	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		UserData user = friendListAdapter.getItem(position);
+		DialogClickEvent event = new DialogClickEvent(user);
+		event.show(getFragmentManager(), null);
+	}
+	
+	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		if( v.getId() == R.id.btnAlive ) {
 			TimeChecker.getInstance().setCurrentTime(getActivity());
 			getListFromServer();
