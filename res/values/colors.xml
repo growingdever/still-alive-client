@@ -16,5 +16,8 @@
     <item name="need_to_update_background" type="color">#FAFAFA</item>
     
     <item name="list_row_text_color2" type="color">#333333</item>
+    <item name="list_row_text_color_state_invalid" type="color">#B9B9B9</item>
+    <item name="list_row_text_color_state_valid" type="color">#FF3600</item>
+    
 
 </resources>

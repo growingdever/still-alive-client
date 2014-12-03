@@ -8,10 +8,11 @@ import org.json.JSONObject;
 
 import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.HTTPHelper;
-import ssu.userinterface.stillalive.main.UserData;
 import ssu.userinterface.stillalive.R;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,12 +34,17 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 	ListView _listView;
 	SearchResultAdapter _adapter;
 	
+	String _accessToken = "";
+	
 	
 	@Override 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_friends);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
+		_accessToken = pref.getString("accessToken", "");		
 		
 		_adapter = new SearchResultAdapter(this, R.layout.search_result_list_row);
 		_listView = (ListView)findViewById(R.id.search_friends_listView);
@@ -81,6 +87,7 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 		String searchText = query;
 		Hashtable<String, String> parameters = new Hashtable<String, String>();
 		parameters.put("keyword", searchText);
+		parameters.put("access_token", _accessToken);
 		
 		HTTPHelper.GET(Config.HOST + "/users/search", parameters,
 				new HTTPHelper.OnResponseListener() {
@@ -114,9 +121,16 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 		for(int i = 0 ; i < size ; ++i){
 			JSONObject item = jsonArray.getJSONObject(i);
 			String userID = item.getString("userID");
+			boolean isSent = item.getBoolean("sent");
+			boolean isFriend = item.getBoolean("friend");
+			int reqID = -1;
+			if( !item.isNull("reqID") ) {
+				reqID = item.getInt("reqID");
+			}
 			
-			UserData userdata = new UserData(userID, "", null);
-			_adapter.add(userdata);
+			Log.d(TAG, userID + " " + reqID);
+			SearchResultData data = new SearchResultData(userID, isSent, isFriend, reqID);
+			_adapter.add(data);
 		}
 		_adapter.notifyDataSetChanged();
 	}
@@ -129,18 +143,71 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		// TODO Auto-generated method stub
-		UserData person = _adapter.getItem(position);
-		requestFriend(person);
+		SearchResultData data = _adapter.getItem(position);
+		if( data.GetIsSent() ) {
+			// show cancel request dialog
+			ShowCancelDialog(position);
+			return;
+		}
+		
+		requestFriend(data);
 	}
 	
-	// 친구 요청
-	private void requestFriend(UserData userdata) {
-		SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
-		String accessToken = pref.getString("accessToken", "");
+	void ShowCancelDialog(final int index) {
+		new AlertDialog.Builder(this)
+		.setTitle("Cancel request")
+	    .setMessage("Are you sure you want to cancel request?")
+	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+	    	
+	    	@Override
+	        public void onClick(DialogInterface dialog, int which) {
+	    		SearchResultData data = _adapter.getItem(index);
+	    		SendReject(data);
+	    		data.SetIsSent(false);
+	    		_adapter.notifyDataSetChanged();
+	        }
+	    })
+	    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+	    	
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		})
+	    .setIcon(android.R.drawable.ic_dialog_alert)
+	    .show();
+	}
+	
+	void SendReject(final SearchResultData data) {
 		Hashtable<String, String> parameters = new Hashtable<String, String>();
-		parameters.put("access_token", accessToken);
-		parameters.put("target_userid", String.valueOf(userdata.GetUserID()));
+		parameters.put("access_token", _accessToken);
+		parameters.put("req_id", data.GetReqID() + "");
+		HTTPHelper.GET(Config.HOST + "/users/cancel", parameters,
+				new HTTPHelper.OnResponseListener() {
+					@Override
+					public void OnResponse(String response) {
+						Log.i(TAG, response);
+						try {
+							JSONObject json = new JSONObject(response);
+							if (json.getInt("result") == 1) {
+								Toast.makeText(getApplicationContext(),	"친구신청 완료", Toast.LENGTH_SHORT).show();
+								data.SetIsSent(true);
+								_adapter.notifyDataSetChanged();
+							} else {
+								
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+	}
+
+	// 친구 요청
+	private void requestFriend(final SearchResultData data) {
+		Hashtable<String, String> parameters = new Hashtable<String, String>();
+		parameters.put("access_token", _accessToken);
+		parameters.put("target_userid", String.valueOf(data.GetUserID()));
 		HTTPHelper.GET(Config.HOST + "/users/ask", parameters,
 				new HTTPHelper.OnResponseListener() {
 					@Override
@@ -149,10 +216,11 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 						try {
 							JSONObject json = new JSONObject(response);
 							if (json.getInt("result") == 1) {
-								Toast.makeText(getApplicationContext(),
-										"핀구신청 완료", Toast.LENGTH_SHORT).show();
+								Toast.makeText(getApplicationContext(),	"친구신청 완료", Toast.LENGTH_SHORT).show();
+								data.SetIsSent(true);
+								_adapter.notifyDataSetChanged();
 							} else {
-
+								
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
