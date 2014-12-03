@@ -117,6 +117,12 @@ public class MainActivity extends GCMActivity {
 			break;
 		}
 		
+		if( currentState == STATE_NEED_TO_UPDATE ) {
+			getActionBar().hide();
+		} else {
+			getActionBar().show();
+		}
+		
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		transaction.replace(R.id.main_fragment_container, newFragment);
 		transaction.addToBackStack(null);
