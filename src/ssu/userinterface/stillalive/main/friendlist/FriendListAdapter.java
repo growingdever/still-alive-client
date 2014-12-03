@@ -44,8 +44,11 @@ public class FriendListAdapter extends ArrayAdapter<UserData> {
         TextView time = (TextView) view.findViewById(R.id.friend_list_row_textview_pass_time);
         
         long sec = diff / 1000;
-        if( sec >= 3600) {
-        	time.setText("1h+");
+        if( sec >= 86400 ) {
+        	time.setText("1d+");
+        } else if( sec >= 3600) {
+        	long hour = sec / 3600;
+        	time.setText(hour + "h");
         } else if( sec >= 60 ) {
         	long min = sec / 60;
         	time.setText(min + "m");
