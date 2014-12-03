@@ -67,9 +67,6 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 		friendListView = (ListView) getView().findViewById(R.id.listView);
 		friendListView.setAdapter(friendListAdapter);
 		friendListView.setOnItemClickListener(this);
-	    
-	    getListFromServer();
-	    
 	}
 	
 	@Override
