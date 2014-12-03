@@ -14,17 +14,17 @@
             android:id="@+id/rbutton1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
-            android:text="Phone call" />
+            android:text="Phone Call" />
 
         <RadioButton
             android:id="@+id/rbutton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sms message" />
+            android:text="SMS" />
          <RadioButton
             android:id="@+id/rbutton3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kakao talk" />
+            android:text="ALIVE" />
          </RadioGroup>
 </LinearLayout>

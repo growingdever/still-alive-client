@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 public class DialogClickEvent extends DialogFragment{
 	UserData u;
 	int checkID;
+	String phoneNum;
     public DialogClickEvent(UserData user)
     {
     	u=user;
@@ -30,7 +31,7 @@ public class DialogClickEvent extends DialogFragment{
 		LayoutInflater inflater=(LayoutInflater)getActivity().getLayoutInflater();
 		final View view =inflater.inflate(R.layout.dialog_click_event, null);
 		RadioGroup group1 = (RadioGroup) view.findViewById(R.id.group);
-		
+		phoneNum=u.GetPhoneNumber();
 		AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
 		group1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() 
 		{
@@ -63,30 +64,41 @@ public class DialogClickEvent extends DialogFragment{
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
 				
-				check(checkID,u);
+				check(checkID);
 
 			}
 		});
 		return builder.create() ;
 }
-	public void check(int c,UserData user)
+	public void check(int c)
 	{
 		switch(c){
 		
 		case 1:
-			String num=user.GetPhoneNumber();
+			//String num=user.GetPhoneNumber();
 			Intent second_intent = new Intent(android.content.Intent.ACTION_VIEW,
-					Uri.parse("tel:"+num));
-			Log.d("test",num);
+					Uri.parse("tel:"+phoneNum));
+			//Log.d("test",num);
 			startActivity(second_intent);
 			break;
 		case 2:
+			 Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + phoneNum));
+			 startActivity(intent);
 			//문자 메시지
 			break;
 		case 3:
-			// 카톡?
+			// 요첫 메시지
+			
+			
+			
 			break;
 		}
+	}
+	private void SendSMS(String phonenumber, String message) {
+	    Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + phonenumber));
+	    intent.putExtra("sms_body", message);
+	    startActivity(intent);
+	    
 	}}
 
 
