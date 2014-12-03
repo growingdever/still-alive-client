@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="15"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -31,8 +31,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="ssu.userinterface.stillalive.main.MainActivity"
-            android:label="@string/app_name">
+            android:name=".main.MainActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,22 +40,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ssu.userinterface.stillalive.main.signin.SignInActivity"
+            android:name=".main.signin.SignInActivity"
             android:theme="@style/AppBaseThemeNoTitle" >
         </activity>
         <activity
-            android:name="ssu.userinterface.stillalive.main.searchuser.SearchFriendsActivity"
-            android:parentActivityName="ssu.userinterface.stillalive.main.MainActivity"
+            android:name=".main.searchuser.SearchFriendsActivity"
+            android:parentActivityName=".main.MainActivity"
             android:theme="@style/AppBaseTheme" >
         </activity>
         <activity
-            android:name="ssu.userinterface.stillalive.main.inbox.InboxActivity"
-            android:parentActivityName="ssu.userinterface.stillalive.main.MainActivity"
+            android:name=".main.inbox.InboxActivity"
+            android:parentActivityName=".main.MainActivity"
             android:theme="@style/AppBaseTheme" >
         </activity>
 
         <receiver
-            android:name="ssu.userinterface.stillalive.gcm.GcmBroadcastReceiver"
+            android:name=".gcm.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -64,9 +64,13 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="ssu.userinterface.stillalive.gcm.GcmIntentServicevice" />
+        <service android:name=".gcm.GcmIntentServicevice" />
 
         <activity android:name=".main.signin.SignUpActivity" >
+        </activity>
+        <activity
+            android:name="ssu.userinterface.stillalive.main.SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 

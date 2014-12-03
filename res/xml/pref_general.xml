@@ -1,0 +1,13 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_default_state_message"
+        android:inputType="textCapWords"
+        android:key="state_message"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_state_message" />
+
+</PreferenceScreen>
