@@ -114,9 +114,8 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 		for(int i = 0 ; i < size ; ++i){
 			JSONObject item = jsonArray.getJSONObject(i);
 			String userID = item.getString("userID");
-			int id = item.getInt("id");
 			
-			UserData userdata = new UserData(userID, "01012345678", null);
+			UserData userdata = new UserData(userID, "", null);
 			_adapter.add(userdata);
 		}
 		_adapter.notifyDataSetChanged();
