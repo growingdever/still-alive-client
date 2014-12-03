@@ -2,12 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ssu.userinterface.stillalive.MainActivity" >
     
-    <item 
-        android:id="@+id/action_alive"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_alive"/>
-
     <item
         android:id="@+id/action_find_user"
         android:orderInCategory="101"

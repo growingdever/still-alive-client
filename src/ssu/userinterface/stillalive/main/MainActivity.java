@@ -57,9 +57,6 @@ public class MainActivity extends GCMActivity {
 			Intent intent = new Intent(this, SettingsActivity.class);
 			startActivity(intent);
 		}
-		else if(id == R.id.action_alive) {
-			SetState(STATE_NEED_TO_UPDATE);
-		}
         else if(id == R.id.action_find_user) {
             Intent intent = new Intent(this, SearchFriendsActivity.class);
             startActivity(intent);

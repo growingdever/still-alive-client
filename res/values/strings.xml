@@ -4,7 +4,6 @@
     <string name="app_name">StillAlive</string>
     <string name="hello_world">Hello world!</string>
     
-    <string name="action_alive">ALLLLLLLLIVE!!!</string>
     <string name="action_find_user">Find Friend</string>
     <string name="action_accept_request">Inbox</string>
     <string name="action_settings">Setting</string>

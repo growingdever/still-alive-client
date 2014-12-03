@@ -144,7 +144,10 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		SearchResultData data = _adapter.getItem(position);
-		if( data.GetIsSent() ) {
+		if( data.GetIsFriend() ) {
+			Toast.makeText(getApplicationContext(), "It's your friend!", Toast.LENGTH_SHORT).show();
+		}
+		else if( data.GetIsSent() ) {
 			// show cancel request dialog
 			ShowCancelDialog(position);
 			return;
