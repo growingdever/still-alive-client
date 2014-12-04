@@ -43,7 +43,6 @@ public class SignInActivity extends GCMActivity{
 	public void OnClickLogIn(View view) {
 		String id = _editTextID.getText().toString();
 		String password = _editTextPassword.getText().toString();
-		//Toast.makeText(getApplicationContext(), "동작", Toast.LENGTH_LONG).show();
 		if (!id.equals("") && !password.equals("")) {
 			Hashtable<String, String> parameters = new Hashtable<String, String>();
 			parameters.put("userid", id);
@@ -58,17 +57,16 @@ public class SignInActivity extends GCMActivity{
 							// TODO Auto-generated method stub
 							try {
 								JSONObject json = new JSONObject(response);
-								if (json.getInt("result") != 1) {
-									//OnFailed();
-									Toast.makeText(getApplicationContext(), "Check your ID and PASSWORD", Toast.LENGTH_LONG).show();
+								int check=json.getInt("result");
+								if (check == 2) {
+									OnFailed();
 									return;
 								}
 
 								String accessToken = json
 										.getString("accessToken");
-								if (accessToken == null) {
-									//OnFailed();
-									Toast.makeText(getApplicationContext(), "Check your ID and PASSWORD", Toast.LENGTH_LONG).show();
+								if (accessToken == null) {	
+									OnFailed();
 									return;
 								}
 
@@ -77,7 +75,7 @@ public class SignInActivity extends GCMActivity{
 								SharedPreferences.Editor editor = pref.edit();
 								editor.putString("accessToken", accessToken);
 								editor.commit();
-								Toast.makeText(getApplicationContext(), "로그인", Toast.LENGTH_LONG).show();
+								
 								OnSuccess();
 
 							} catch (JSONException e) {
@@ -90,6 +88,7 @@ public class SignInActivity extends GCMActivity{
 	} 
 
 	void OnSuccess() {
+		Toast.makeText(getApplicationContext(), "Success login", Toast.LENGTH_LONG).show();
 		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(intent);
@@ -100,10 +99,11 @@ public class SignInActivity extends GCMActivity{
 		Intent gointent = new Intent(getApplicationContext(),SignUpActivity.class);
 		startActivity(gointent);
 	}
-
-	void OnFailed() {
-		Intent goback=new Intent(getApplicationContext(),SignInActivity.class);
-		startActivity(goback);
+	public void OnFailed()
+	{
+		Toast.makeText(getApplicationContext(), "Fail to login", Toast.LENGTH_LONG).show();
+		Toast.makeText(getApplicationContext(), "Check your ID and PASSWORD", Toast.LENGTH_LONG).show();
 	}
+	
 
 }

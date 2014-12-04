@@ -62,10 +62,7 @@ public class SignUpActivity extends GCMActivity{
 				phone = _editTextPhone.getText().toString();
 				SmsManager sms =SmsManager.getDefault();
 				sms.sendTextMessage(phone, null, Integer.toString(rescheck), null, null);
-				
-				
-				
-				
+								
 			}
 		});
 	}
@@ -76,7 +73,7 @@ public class SignUpActivity extends GCMActivity{
 		String id = _editTextID.getText().toString();
 		String password = _editTextPassword.getText().toString();
 		
-		if (!id.equals("") && !password.equals("")&&correctPhone!=0 ) {
+		if (!id.equals("") && !password.equals("")){
 			Hashtable<String, String> parameters = new Hashtable<String, String>();
 			parameters.put("name", name);
 			parameters.put("phone", phone);
@@ -94,16 +91,16 @@ public class SignUpActivity extends GCMActivity{
 							try {
 								
 								JSONObject json = new JSONObject(response);
-					
-								if (json.getInt("result") != 1) {
+								int checkRes=json.getInt("result");
+								if (checkRes != 1 || correctPhone==0) {
 									
-									Toast.makeText(getApplicationContext(), "Fail Joined!, Try another ID!", Toast.LENGTH_LONG).show();
+									OnFailed(checkRes);
 									return;
 								}
 								else{
-								
-									Toast.makeText(getApplicationContext(), "Success Joined!", Toast.LENGTH_LONG).show();
-									finish();
+									OnSuccess();
+									//Toast.makeText(getApplicationContext(), "Success Joined!", Toast.LENGTH_LONG).show();
+									//finish();
 								}
 								
 							} catch (JSONException e) {
@@ -113,19 +110,21 @@ public class SignUpActivity extends GCMActivity{
 							}
 						}
 					});
-		}
-		else
-			Toast.makeText(getApplicationContext(), "Try check your Phone number", Toast.LENGTH_LONG).show();
+		}	
 			
 	}
 
 	void OnSuccess() {
-		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
-		startActivity(intent);
+		Toast.makeText(getApplicationContext(), "Success Joined!", Toast.LENGTH_LONG).show();
+		finish();
 	}
-	void OnFailed() {
-			
+	void OnFailed(int check) {
+		Toast.makeText(getApplicationContext(), "Fail to join", Toast.LENGTH_LONG).show();
+		if(check==3)
+			Toast.makeText(getApplicationContext(), "Already exist ID", Toast.LENGTH_LONG).show();
+		else if (correctPhone==0)
+			Toast.makeText(getApplicationContext(), "Try check your Phone number", Toast.LENGTH_LONG).show();
+		
 	}
 
 }
