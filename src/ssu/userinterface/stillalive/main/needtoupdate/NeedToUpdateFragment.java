@@ -5,6 +5,8 @@ import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.TimeChecker;
 import ssu.userinterface.stillalive.main.MainActivity;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +22,8 @@ import android.widget.ImageView;
 public class NeedToUpdateFragment extends Fragment implements OnClickListener, AnimationListener {
 	
 	private static final String TAG = "NeedToUpdateFragment";
-	
+	SharedPreferences updateCK;
+	SharedPreferences.Editor editor;
 	Button _buttonAlive;
 	ImageView _imageViewButtonBack;
 	
@@ -34,12 +37,14 @@ public class NeedToUpdateFragment extends Fragment implements OnClickListener, A
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
+		updateCK=this.getActivity().getSharedPreferences("key", Context.MODE_PRIVATE);
+		editor=updateCK.edit();
 		_scaleAnimatiton = AnimationUtils.loadAnimation(this.getActivity(), R.anim.scale_alive_button);
 		_scaleAnimatiton.setAnimationListener(this);
 		_imageViewButtonBack = (ImageView) getView().findViewById(R.id.fragment_need_to_update_button_background);
@@ -56,6 +61,8 @@ public class NeedToUpdateFragment extends Fragment implements OnClickListener, A
 	public void onClick(View v) {
 		switch(v.getId()) {
 		case R.id.btnAlive:
+			editor.putInt("checkID", 1);
+            editor.commit();
 			OnClickButtonAlive();
 			break;
 		}

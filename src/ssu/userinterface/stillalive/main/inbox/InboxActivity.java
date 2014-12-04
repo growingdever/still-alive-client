@@ -2,7 +2,6 @@ package ssu.userinterface.stillalive.main.inbox;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
@@ -16,19 +15,16 @@ import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.HTTPHelper;
 import ssu.userinterface.stillalive.common.HTTPHelper.OnResponseListener;
 import ssu.userinterface.stillalive.main.RequestItem;
-import ssu.userinterface.stillalive.main.friendlist.FriendListAdapter;
-import ssu.userinterface.stillalive.main.searchuser.SearchResultAdapter;
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
 public class InboxActivity extends Activity implements OnItemClickListener {
 	
@@ -101,6 +97,7 @@ public class InboxActivity extends Activity implements OnItemClickListener {
 			
 			RequestItem request = new RequestItem(id, userID, calendar);
 			_adapter.add(request);
+			
 		}
 		
 		_adapter.notifyDataSetChanged();

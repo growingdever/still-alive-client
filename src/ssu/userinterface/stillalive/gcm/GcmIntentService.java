@@ -2,48 +2,48 @@ package ssu.userinterface.stillalive.gcm;
 
 import ssu.userinterface.stillalive.R;
 import ssu.userinterface.stillalive.main.MainActivity;
-
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-
+import android.app.Activity;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 public class GcmIntentService extends IntentService {
 	
 	public static final int NOTIFICATION_ID = 1;
 	private static final String TAG = "GcmIntentService";
+	SharedPreferences updateCK;
+	
 	
     private NotificationManager mNotificationManager;
     NotificationCompat.Builder builder;
 
     public GcmIntentService() {
         super(TAG);
+       
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
-        
-        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-        String messageType = gcm.getMessageType(intent);
-
+       updateCK= this.getSharedPreferences("key", Context.MODE_PRIVATE);
+       SharedPreferences.Editor editor=updateCK.edit();
+      
         if (!extras.isEmpty()) {
-            if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                sendNotification("Send error: " + extras.toString());
+            if (extras.getString("type").equals("1")) {
+            	editor.putInt("checkID", 0);
+                editor.commit();
+            	sendNotification("Request ALIVE: " + extras.getString("senderUserID")+"has request to your alive");
+                
             } 
-            else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
-                sendNotification("Deleted messages on server: " + extras.toString());
+            else if (extras.getString("type").equals("2")) {
+                sendNotification("Friend Invitation: " + extras.getString("senderUserID")+"has requested to you");
             }
-            else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-                sendNotification("Received: " + extras.toString());
-                Log.i(TAG, "Received: " + extras.toString());
-            }
+           
         }
         
         GcmBroadcastReceiver.completeWakefulIntent(intent);

@@ -9,6 +9,7 @@ import ssu.userinterface.stillalive.main.inbox.InboxActivity;
 import ssu.userinterface.stillalive.main.needtoupdate.NeedToUpdateFragment;
 import ssu.userinterface.stillalive.main.searchuser.SearchFriendsActivity;
 import ssu.userinterface.stillalive.main.signin.SignInActivity;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -20,18 +21,19 @@ import android.view.MenuItem;
 
 public class MainActivity extends GCMActivity {
 
-	private static final String TAG = "MainActivity";
-	
+	private static final String TAG = "MainActivity";	
 	public static final int STATE_FRIEND_LIST = 1;
 	public static final int STATE_NEED_TO_UPDATE = 2;
-	
+	SharedPreferences updateCK;
+	SharedPreferences.Editor editor;
 	private int currentState = STATE_FRIEND_LIST;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		updateCK=getSharedPreferences("key",MODE_PRIVATE);
+		
 		SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
 		Log.d(TAG, pref.getString("accessToken", ""));
 		if (pref.getString("accessToken", "").equals("")) {
@@ -84,9 +86,9 @@ public class MainActivity extends GCMActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		
+		int check=updateCK.getInt("checkID", 1);
 		long gapTime = TimeChecker.getInstance().getCurrentGapTimeFromBefore(this);
-		if( gapTime < Config.GAP_TIME ) {
+		if( gapTime < Config.GAP_TIME && check==1) {
 			SetState(STATE_FRIEND_LIST);
 		}
 		else {
