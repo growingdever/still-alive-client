@@ -64,7 +64,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".gcm.GcmIntentServicevice" />
+        <service android:name=".gcm.GcmIntentService" />
 
         <activity android:name=".main.signin.SignUpActivity" >
         </activity>
