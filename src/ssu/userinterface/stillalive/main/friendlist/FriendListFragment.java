@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.TimeZone;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -136,9 +137,10 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 	
 	private void onSuccess(JSONObject json) throws JSONException, ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		Date localTime = new Date(System.currentTimeMillis());
 		
 		friendListAdapter.clear();
-
+	    
 		JSONArray data = json.getJSONArray("data");
 		int length = data.length();
 		for(int i = 0 ; i < length ; ++i){
@@ -146,8 +148,12 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 			JSONObject item = data.getJSONObject(i);
 			String userID = item.getString("userID");
 			String stateMessage = item.getString("stateMessage");
+			
+			Date date = formatter.parse(item.getString("updatedAt"));
+			Date localeDate = new Date(date.getTime() + TimeZone.getDefault().getOffset(localTime.getTime()));
+			
 			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(formatter.parse(item.getString("updatedAt")));
+			calendar.setTime(localeDate);
 			
 			UserData person = new UserData(userID, "01012345678", stateMessage, calendar);
 			friendListAdapter.add(person);
