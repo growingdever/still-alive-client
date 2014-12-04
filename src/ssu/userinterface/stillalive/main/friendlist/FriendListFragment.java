@@ -28,10 +28,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -74,6 +78,8 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 		super.onResume();
 		
 		getListFromServer();
+		
+		btnAlive.setOnClickListener(this);
 	}
 
 	//친구 상태 조회
@@ -118,6 +124,7 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 				try {
 					JSONObject json = new JSONObject(response);
 					if (json.getInt("result") == 1) {
+						onSuccessUpdate();
 					}else{
 					}
 				} catch (JSONException e) {
@@ -151,6 +158,33 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 
 	private void onFail(JSONObject json) {
 		
+	}
+	
+	void onSuccessUpdate() {
+		btnAlive.setOnClickListener(null);
+		
+		// start animation
+		Animation scaleAnimatiton = AnimationUtils.loadAnimation(this.getActivity(), R.anim.scale_alive_button_no_delay);
+		ImageView imageViewButtonBack = (ImageView) getView().findViewById(R.id.fragment_friend_list_alive_button_background);
+		imageViewButtonBack.startAnimation(scaleAnimatiton);
+		
+		Animation rotation = AnimationUtils.loadAnimation(this.getActivity(), R.anim.rotate_alive_button);
+		btnAlive.startAnimation(rotation);
+		rotation.setAnimationListener(new AnimationListener() {
+			
+			@Override
+			public void onAnimationStart(Animation animation) {
+			}
+			
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+			}
+			
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				btnAlive.setOnClickListener(FriendListFragment.this);
+			}
+		});
 	}
 	
 	@Override
