@@ -82,7 +82,7 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 	public boolean onQueryTextSubmit(String query) {
 		Log.d(TAG, "onQueryTextSubmit");
 		
-		final ProgressDialog progressDialog = ProgressDialog.show(SearchFriendsActivity.this,"","잠시만 기다려 주세요.",true);
+		final ProgressDialog progressDialog = ProgressDialog.show(SearchFriendsActivity.this,"","Loading...",true);
 		
 		String searchText = query;
 		Hashtable<String, String> parameters = new Hashtable<String, String>();
@@ -106,7 +106,7 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 							e.printStackTrace();
 						}
 						
-						Toast.makeText(getApplicationContext(), "아이디를 클릭하여 친구 요청을 보내세요.", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(), "Click item to send request!", Toast.LENGTH_SHORT).show();
 					}
 				});
 		_searchView.clearFocus();
@@ -193,7 +193,6 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 						try {
 							JSONObject json = new JSONObject(response);
 							if (json.getInt("result") == 1) {
-								Toast.makeText(getApplicationContext(),	"친구신청 완료", Toast.LENGTH_SHORT).show();
 								data.SetIsSent(true);
 								_adapter.notifyDataSetChanged();
 							} else {
@@ -219,7 +218,6 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 						try {
 							JSONObject json = new JSONObject(response);
 							if (json.getInt("result") == 1) {
-								Toast.makeText(getApplicationContext(),	"친구신청 완료", Toast.LENGTH_SHORT).show();
 								data.SetIsSent(true);
 								_adapter.notifyDataSetChanged();
 							} else {

@@ -9,8 +9,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class TimeChecker {
-	private String PREFERENCE_NAME = "MY_PREF";
-	private String PREFERENCE_TIME_ATTR = "TIME";
+	private String PREFERENCE_NAME = "default";
+	private String PREFERENCE_TIME_ATTR = "lastUpdateTime";
 	private static TimeChecker _singleton;
 	public static TimeChecker getInstance() {
 		if (_singleton == null) {
@@ -30,6 +30,13 @@ public class TimeChecker {
 		editor.putLong(PREFERENCE_TIME_ATTR, current);
 		editor.commit();
 	}
+
+    public void removeTime(Context context) {
+        SharedPreferences setting = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = setting.edit();
+        editor.putLong(PREFERENCE_TIME_ATTR, 0);
+        editor.commit();
+    }
 	
 	public long getCurrentGapTimeFromBefore(Context context){
 		SharedPreferences setting = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);

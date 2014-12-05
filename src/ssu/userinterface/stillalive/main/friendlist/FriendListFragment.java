@@ -18,6 +18,8 @@ import ssu.userinterface.stillalive.common.TimeChecker;
 import ssu.userinterface.stillalive.common.HTTPHelper.OnResponseListener;
 import ssu.userinterface.stillalive.main.UserData;
 import ssu.userinterface.stillalive.R;
+
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -160,6 +162,12 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 		}
 		
 		friendListAdapter.notifyDataSetChanged();
+
+
+        SharedPreferences pref = getActivity().getSharedPreferences("default", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("shouldUpdate", false);
+        editor.commit();
 	}
 
 	private void onFail(JSONObject json) {

@@ -1,100 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#6799FF" >
+    android:background="@color/need_to_update_background">
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/signup_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Sign Up"
-        android:textSize="35sp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Don&apos;t worry, always Free!!!" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:paddingBottom="30dp"
+        android:text="StillAlive"
+        android:textColor="#0099CC"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/nameText"
-        android:layout_width="250dp"
-        android:layout_height="35dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/round"
+        android:id="@+id/signup_edittext_name"
+        android:layout_width="@dimen/signin_view_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signup_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="Name or Nickname" >
+        android:hint="Name"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:singleLine="true">
 
         <requestFocus />
     </EditText>
 
-    <LinearLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" >
-
-        <EditText
-            android:id="@+id/phoneText"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0.8"
-            android:background="@drawable/round"
-            android:ems="10"
-            android:hint="phone number" />
-
-        <Button
-            android:id="@+id/givebt"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.15"
-            android:text="check"
-            android:textSize="10sp" />
-
-    </LinearLayout>
-     
     <EditText
-        android:id="@+id/idText"
-        android:layout_width="250dp"
-        android:layout_height="35dp"
-        android:layout_gravity="center"
+        android:id="@+id/signup_edittext_id"
+        android:layout_width="@dimen/signin_view_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signup_edittext_name"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:background="@drawable/round"
         android:ems="10"
-        android:hint="ID" >
-        
-    </EditText>
+        android:hint="ID"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:singleLine="true" />
 
-     <EditText
-         android:id="@+id/passwordText"
-         android:layout_width="250dp"
-         android:layout_height="35dp"
-         android:layout_gravity="center"
-         android:layout_marginTop="10dp"
-         android:background="@drawable/round"
-         android:ems="10"
-         android:hint="PASSWORD"
-         android:password="true" >
-        
-    </EditText>
+    <EditText
+        android:id="@+id/signup_edittext_password"
+        android:layout_width="@dimen/signin_view_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signup_edittext_id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="PASSWORD"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:password="true"
+        android:singleLine="true" />
 
-     <Button
-         android:id="@+id/signupBT"
-         android:layout_width="130dp"
-         android:layout_height="wrap_content"
-         android:layout_marginLeft="35dp"
-         android:layout_marginTop="40dp"
-         android:background="#4374D9"
-         android:onClick="onclickSignUp"
-         android:text="SignUp"
-         android:textSize="25sp" />
+    <EditText
+        android:id="@+id/signup_edittext_password_check"
+        android:layout_width="@dimen/signin_view_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signup_edittext_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Re-enter PASSWORD"
+        android:imeOptions="actionNext"
+        android:maxLines="1"
+        android:password="true"
+        android:singleLine="true" />
 
-</LinearLayout>
+    <EditText
+        android:id="@+id/signup_edittext_phonenumber"
+        android:layout_width="@dimen/signin_view_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signup_edittext_password_check"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Phone Number"
+        android:imeOptions="actionDone"
+        android:inputType="phone"
+        android:maxLines="1"
+        android:singleLine="true" />
+
+    <Button
+        android:id="@+id/signup_button_create_count"
+        android:layout_width="@dimen/signin_view_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signup_edittext_phonenumber"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@color/signin_button_background"
+        android:nextFocusDown="@id/signup_edittext_phonenumber"
+        android:onClick="OnClickCreateAccount"
+        android:padding="10dp"
+        android:text="Create Account"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
+
+</RelativeLayout>

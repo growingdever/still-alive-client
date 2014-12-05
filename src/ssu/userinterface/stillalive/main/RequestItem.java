@@ -21,7 +21,7 @@ public class RequestItem {
 		return senderUserID;
 	}
 	
-	public Calendar GetSendedDate() {
+	public Calendar GetSentDate() {
 		return sendedDate;
 	}
 }

@@ -14,33 +14,48 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class SignInActivity extends GCMActivity{
+public class SignInActivity extends GCMActivity {
 
 	private static final String TAG = "SignInActivity";
 
 	EditText _editTextID;
 	EditText _editTextPassword;
-	
+    Button _buttonSignIn;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_signin);
-		Log.d("test","111111111111");
-		_editTextID = (EditText) findViewById(R.id.idText);
-		_editTextPassword = (EditText) findViewById(R.id.passwordText);
 
-		if (checkPlayServices()
-				&& getRegistrationId(getApplicationContext()).isEmpty()) {
+		_editTextID = (EditText) findViewById(R.id.signin_edittext_id);
+		_editTextPassword = (EditText) findViewById(R.id.signin_edittext_password);
+        _editTextPassword.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (i == KeyEvent.KEYCODE_ENTER)) {
+                    _buttonSignIn.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        _buttonSignIn = (Button) findViewById(R.id.signin_button_signin);
+
+		if (checkPlayServices() && getRegistrationId(getApplicationContext()).isEmpty()) {
 			registerInBackground();
 		}
 	}
 
-	public void OnClickLogIn(View view) {
+	public void OnClickSignIn(View view) {
 		String id = _editTextID.getText().toString();
 		String password = _editTextPassword.getText().toString();
 		if (!id.equals("") && !password.equals("")) {
@@ -54,7 +69,6 @@ public class SignInActivity extends GCMActivity{
 
 						@Override
 						public void OnResponse(String response) {
-							// TODO Auto-generated method stub
 							try {
 								JSONObject json = new JSONObject(response);
 								int check=json.getInt("result");
@@ -63,29 +77,30 @@ public class SignInActivity extends GCMActivity{
 									return;
 								}
 
-								String accessToken = json
-										.getString("accessToken");
+								String accessToken = json.getString("accessToken");
 								if (accessToken == null) {	
 									OnFailed();
 									return;
 								}
 
-								SharedPreferences pref = getSharedPreferences(
-										"default", MODE_PRIVATE);
+								SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
 								SharedPreferences.Editor editor = pref.edit();
 								editor.putString("accessToken", accessToken);
 								editor.commit();
 								
 								OnSuccess();
-
 							} catch (JSONException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
 					});
 		}
-	} 
+	}
+
+    public void OnClickSignUp(View view) {
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
+    }
 
 	void OnSuccess() {
 		Toast.makeText(getApplicationContext(), "Success login", Toast.LENGTH_LONG).show();
@@ -95,15 +110,9 @@ public class SignInActivity extends GCMActivity{
 		finish();
 	}
 	
-	public void signin(View view){
-		Intent gointent = new Intent(getApplicationContext(),SignUpActivity.class);
-		startActivity(gointent);
-	}
 	public void OnFailed()
 	{
 		Toast.makeText(getApplicationContext(), "Fail to login", Toast.LENGTH_LONG).show();
 		Toast.makeText(getApplicationContext(), "Check your ID and PASSWORD", Toast.LENGTH_LONG).show();
 	}
-	
-
 }

@@ -3,6 +3,7 @@ package ssu.userinterface.stillalive.main;
 import ssu.userinterface.stillalive.R;
 import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.GCMActivity;
+import ssu.userinterface.stillalive.common.HTTPHelper;
 import ssu.userinterface.stillalive.common.TimeChecker;
 import ssu.userinterface.stillalive.main.friendlist.FriendListFragment;
 import ssu.userinterface.stillalive.main.inbox.InboxActivity;
@@ -19,24 +20,26 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Hashtable;
+
 public class MainActivity extends GCMActivity {
 
 	private static final String TAG = "MainActivity";	
 	public static final int STATE_FRIEND_LIST = 1;
 	public static final int STATE_NEED_TO_UPDATE = 2;
-	SharedPreferences updateCK;
-	SharedPreferences.Editor editor;
 	private int currentState = STATE_FRIEND_LIST;
+
+    String _accessToken;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		updateCK=getSharedPreferences("key",MODE_PRIVATE);
-		
+
 		SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
-		Log.d(TAG, pref.getString("accessToken", ""));
-		if (pref.getString("accessToken", "").equals("")) {
+        _accessToken = pref.getString("accessToken", "");
+		if (_accessToken.equals("")) {
 			Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 			startActivity(intent);
@@ -68,15 +71,7 @@ public class MainActivity extends GCMActivity {
             startActivity(intent);
         }
         else if(id == R.id.action_sign_out) {
-        	SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
-        	SharedPreferences.Editor editor = pref.edit();
-        	editor.putString("accessToken", "");
-        	editor.commit();
-        	
-        	Intent intent = new Intent(this, MainActivity.class);
-        	intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); 
-            startActivity(intent);
-            finish();
+            SignOut();
         }
 
 		return super.onOptionsItemSelected(item);
@@ -86,9 +81,12 @@ public class MainActivity extends GCMActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		int check=updateCK.getInt("checkID", 1);
+
+        SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
+        boolean shouldUpdate = pref.getBoolean("shouldUpdate", false);
+
 		long gapTime = TimeChecker.getInstance().getCurrentGapTimeFromBefore(this);
-		if( gapTime < Config.GAP_TIME && check==1) {
+		if( gapTime < Config.GAP_TIME && !shouldUpdate ) {
 			SetState(STATE_FRIEND_LIST);
 		}
 		else {
@@ -130,4 +128,37 @@ public class MainActivity extends GCMActivity {
 		transaction.addToBackStack(null);
 		transaction.commit();
 	}
+
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() == 0) {
+            this.finish();
+        } else {
+            getFragmentManager().popBackStack();
+        }
+    }
+
+    void SignOut() {
+        Hashtable<String, String> parameters = new Hashtable<String, String>();
+        parameters.put("access_token", _accessToken);
+        HTTPHelper.GET(Config.HOST + "/auth/signout",
+                parameters,
+                new HTTPHelper.OnResponseListener() {
+                    @Override
+                    public void OnResponse(String response) {
+                        SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("accessToken   ", "");
+                        editor.commit();
+
+                        TimeChecker.getInstance().removeTime(MainActivity.this);
+
+
+                        Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+    }
 }

@@ -1,74 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4374D9"
-    android:focusable="false"
-    android:focusableInTouchMode="false"
-    android:onClick="signin"
-    android:orientation="vertical" >
+    android:background="@color/need_to_update_background">
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/signin_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|top"
-        android:layout_marginTop="30dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:paddingBottom="30dp"
         android:text="StillAlive"
-        android:textColor="#FFFFFF"
+        android:textColor="#0099CC"
         android:textSize="40sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/idText"
-        android:layout_width="250dp"
-        android:layout_height="35dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/round"
-        android:ems="10"
-        android:hint="ID" >
+    <ImageView
+        android:id="@+id/signin_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@id/signin_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/ic_launcher" />
 
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/passwordText"
-        android:layout_width="250dp"
-        android:layout_height="35dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/round"
-        android:ems="10"
-        android:hint="PASSWORD"
-        android:password="true" >
-
-         </EditText>
-
-    <Button
-        android:id="@+id/loginBt"
-        android:layout_width="250dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:background="#003399"
-        android:text="Log In"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:onClick="OnClickLogIn" />
+        android:layout_below="@id/signin_title"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/signText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:clickable="true"
-        android:onClick="signin"
-        android:text="Sign up for StillAlive"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        android:textStyle="italic|normal|bold" />
+        <EditText
+            android:id="@+id/signin_edittext_id"
+            android:layout_width="@dimen/signin_view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="ID"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:focusable="true">
 
-</LinearLayout>
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/signin_edittext_password"
+            android:layout_width="@dimen/signin_view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="PASSWORD"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:password="true"
+            android:imeOptions="actionDone"
+            android:focusable="true"
+            android:nextFocusDown="@id/signin_edittext_id">
+
+        </EditText>
+
+        <Button
+            android:id="@+id/signin_button_signin"
+            android:layout_width="@dimen/signin_view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="#003399"
+            android:onClick="OnClickSignIn"
+            android:text="Sign In"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:nextFocusDown="@id/signin_edittext_password"/>
+
+        <Button
+            android:id="@+id/signin_button_signup"
+            android:layout_width="@dimen/signin_view_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="#003399"
+            android:onClick="OnClickSignUp"
+            android:text="Or Join Us"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -2,9 +2,12 @@
 <resources>
     
     <item name="transparent" type="color">#00000000</item>
+    <item name="white" type="color">#F2F2F2</item>
     
     <item name="new_actionbar_background" type="color">#309BC5</item>
     <item name="new_actionbar_title_text_color" type="color">#F2F2F2</item>
+
+    <item name="signin_button_background" type="color">#003399</item>
     
     <item name="update_button_background" type="color">#0099CC</item>
     <item name="update_button_text" type="color">#FFFFFF</item>

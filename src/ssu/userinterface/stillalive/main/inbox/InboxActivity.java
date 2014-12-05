@@ -61,7 +61,8 @@ public class InboxActivity extends Activity implements OnItemClickListener {
 		HTTPHelper.GET(Config.HOST + "/users/received_requests", parameters, new OnResponseListener() {
 			@Override
 			public void OnResponse(String response) {
-				try {
+                Log.d(TAG, response);
+                try {
 					JSONObject json = new JSONObject(response);
 					if (json.getInt("result") == 1) {
 						OnSuccessToLoadList(json);
@@ -115,6 +116,7 @@ public class InboxActivity extends Activity implements OnItemClickListener {
 			@Override
 			public void OnResponse(String response) {
 				_adapter.remove(item);
+                _adapter.notifyDataSetChanged();
 			}
 		});
 	}

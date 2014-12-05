@@ -13,7 +13,17 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:textColor="@color/list_row_text_color2"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/inbox_list_row_sent_at"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="right"
+        android:textSize="20sp"
+        android:textColor="@color/list_row_text_color_state_valid"/>
     
 
 </RelativeLayout>
