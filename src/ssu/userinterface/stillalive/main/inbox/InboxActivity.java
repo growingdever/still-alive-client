@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ssu.userinterface.stillalive.R;
+import ssu.userinterface.stillalive.common.AuthManager;
 import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.HTTPHelper;
 import ssu.userinterface.stillalive.common.HTTPHelper.OnResponseListener;
@@ -23,6 +24,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -61,13 +63,22 @@ public class InboxActivity extends Activity implements OnItemClickListener {
 		HTTPHelper.GET(Config.HOST + "/users/received_requests", parameters, new OnResponseListener() {
 			@Override
 			public void OnResponse(String response) {
-                Log.d(TAG, response);
                 try {
 					JSONObject json = new JSONObject(response);
-					if (json.getInt("result") == 1) {
+					int result = json.getInt("result");
+					switch( result ) {
+					case Config.RESULT_CODE_SUCCESS:
 						OnSuccessToLoadList(json);
-					}else{
-						Log.e(TAG, "Failed to parse requests from response!");
+						break;
+						
+					case Config.RESULT_CODE_NOT_VALID_ACCESS_TOKEN:
+					case Config.RESULT_CODE_EXPIRED_ACCESS_TOKEN:
+						AuthManager.ShowAuthFailAlert(InboxActivity.this);
+						break;
+						
+					default:
+						Toast.makeText(InboxActivity.this, "Server error...", Toast.LENGTH_SHORT).show();
+						break;
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();

@@ -20,6 +20,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import ssu.userinterface.stillalive.R;
+import ssu.userinterface.stillalive.common.AuthManager;
 import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.HTTPHelper;
 import ssu.userinterface.stillalive.common.HTTPHelper.OnResponseListener;
@@ -107,15 +108,27 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
 				
 				@Override
 				public void OnResponse(String response) {
+					int result = 0;
 					try {
 						JSONObject json = new JSONObject(response);
-						if( json.getInt("result") == 1) {
-							Toast.makeText(getApplicationContext(), "Changed!", Toast.LENGTH_SHORT).show();
-						} else {
-							Toast.makeText(getApplicationContext(), "Server error...", Toast.LENGTH_SHORT).show();
-						}
+						result = json.getInt("result");
 					} catch (JSONException e) {
 						e.printStackTrace();
+					}
+					
+					switch( result ) {
+					case Config.RESULT_CODE_SUCCESS:
+						Toast.makeText(getApplicationContext(), "Changed!", Toast.LENGTH_SHORT).show();
+						break;
+						
+					case Config.RESULT_CODE_NOT_VALID_ACCESS_TOKEN:
+					case Config.RESULT_CODE_EXPIRED_ACCESS_TOKEN:
+						AuthManager.ShowAuthFailAlert(SettingsActivity.this);
+						break;
+						
+					default:
+						Toast.makeText(getApplicationContext(), "Server error...", Toast.LENGTH_SHORT).show();
+						break;
 					}
 				}
 			});

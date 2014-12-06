@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ssu.userinterface.stillalive.common.AuthManager;
 import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.HTTPHelper;
 import ssu.userinterface.stillalive.R;
@@ -93,20 +94,29 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 				new HTTPHelper.OnResponseListener() {
 					@Override
 					public void OnResponse(String response) {
-						Log.i(TAG, response);
 						progressDialog.dismiss();
+
 						try {
 							JSONObject json = new JSONObject(response);
-							if (json.getInt("result") == 1) {
+							int result = json.getInt("result");
+							switch( result ) {
+							case Config.RESULT_CODE_SUCCESS:
 								onSuccess(json);
-							}else{
-								onFail(json);
+								Toast.makeText(getApplicationContext(), "Click item to send request!", Toast.LENGTH_SHORT).show();
+								break;
+								
+							case Config.RESULT_CODE_NOT_VALID_ACCESS_TOKEN:
+							case Config.RESULT_CODE_EXPIRED_ACCESS_TOKEN:
+								AuthManager.ShowAuthFailAlert(SearchFriendsActivity.this);
+								break;
+								
+							default:
+								Toast.makeText(SearchFriendsActivity.this, "Server error...", Toast.LENGTH_SHORT).show();
+								break;
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
-						
-						Toast.makeText(getApplicationContext(), "Click item to send request!", Toast.LENGTH_SHORT).show();
 					}
 				});
 		_searchView.clearFocus();
@@ -128,7 +138,6 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 				reqID = item.getInt("reqID");
 			}
 			
-			Log.d(TAG, userID + " " + reqID);
 			SearchResultData data = new SearchResultData(userID, isSent, isFriend, reqID);
 			_adapter.add(data);
 		}
@@ -192,11 +201,21 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 						Log.i(TAG, response);
 						try {
 							JSONObject json = new JSONObject(response);
-							if (json.getInt("result") == 1) {
+							int result = json.getInt("result");
+							switch( result ) {
+							case Config.RESULT_CODE_SUCCESS:
 								data.SetIsSent(true);
 								_adapter.notifyDataSetChanged();
-							} else {
+								break;
 								
+							case Config.RESULT_CODE_NOT_VALID_ACCESS_TOKEN:
+							case Config.RESULT_CODE_EXPIRED_ACCESS_TOKEN:
+								AuthManager.ShowAuthFailAlert(SearchFriendsActivity.this);
+								break;
+								
+							default:
+								Toast.makeText(SearchFriendsActivity.this, "Server error...", Toast.LENGTH_SHORT).show();
+								break;
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();
@@ -205,7 +224,6 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 				});
 	}
 
-	// 친구 요청
 	private void requestFriend(final SearchResultData data) {
 		Hashtable<String, String> parameters = new Hashtable<String, String>();
 		parameters.put("access_token", _accessToken);
@@ -217,11 +235,21 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 						Log.i(TAG, response);
 						try {
 							JSONObject json = new JSONObject(response);
-							if (json.getInt("result") == 1) {
+							int result = json.getInt("result");
+							switch( result ) {
+							case Config.RESULT_CODE_SUCCESS:
 								data.SetIsSent(true);
 								_adapter.notifyDataSetChanged();
-							} else {
+								break;
 								
+							case Config.RESULT_CODE_NOT_VALID_ACCESS_TOKEN:
+							case Config.RESULT_CODE_EXPIRED_ACCESS_TOKEN:
+								AuthManager.ShowAuthFailAlert(SearchFriendsActivity.this);
+								break;
+								
+							default:
+								Toast.makeText(SearchFriendsActivity.this, "Server error...", Toast.LENGTH_SHORT).show();
+								break;
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();

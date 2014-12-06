@@ -12,10 +12,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ssu.userinterface.stillalive.common.AuthManager;
 import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.common.HTTPHelper;
 import ssu.userinterface.stillalive.common.TimeChecker;
 import ssu.userinterface.stillalive.common.HTTPHelper.OnResponseListener;
+import ssu.userinterface.stillalive.main.SettingsActivity;
 import ssu.userinterface.stillalive.main.UserData;
 import ssu.userinterface.stillalive.R;
 
@@ -40,6 +42,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class FriendListFragment extends Fragment implements OnClickListener, OnItemClickListener {
@@ -97,20 +100,38 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 		HTTPHelper.GET(Config.HOST + "/list", parameters, new OnResponseListener() {
 			@Override
 			public void OnResponse(String response) {
-				Log.i(TAG, response);
 				progressDialog.dismiss();
+				
+				JSONObject json = null;
+				int result = 0;
 				try {
-					JSONObject json = new JSONObject(response);
-					if (json.getInt("result") == 1) {
-						onSuccess(json);
-					}else{
-						onFail(json);
-					}
+					json = new JSONObject(response);
+					result = json.getInt("result");
 				} catch (JSONException e) {
 					e.printStackTrace();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				}
+				
+				switch( result ) {
+				case Config.RESULT_CODE_SUCCESS:
+					try {
+						OnSuccessGetFriendList(json);
+					} catch (JSONException e) {
+						e.printStackTrace();
+						Toast.makeText(getActivity(), "Server error...", Toast.LENGTH_SHORT).show();
+					} catch (ParseException e) {
+						e.printStackTrace();
+						Toast.makeText(getActivity(), "Server error...", Toast.LENGTH_SHORT).show();
+					}
+					break;
+					
+				case Config.RESULT_CODE_NOT_VALID_ACCESS_TOKEN:
+				case Config.RESULT_CODE_EXPIRED_ACCESS_TOKEN:
+					AuthManager.ShowAuthFailAlert(getActivity());
+					break;
+					
+				default:
+					Toast.makeText(getActivity(), "Server error...", Toast.LENGTH_SHORT).show();
+					break;
 				}
 			}
 		});
@@ -123,21 +144,33 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 		HTTPHelper.GET(Config.HOST + "/update", parameters, new OnResponseListener() {
 			@Override
 			public void OnResponse(String response) {
-				Log.i(TAG, response);
+				int result = 0;
 				try {
 					JSONObject json = new JSONObject(response);
-					if (json.getInt("result") == 1) {
-						onSuccessUpdate();
-					}else{
-					}
+					result = json.getInt("result");
 				} catch (JSONException e) {
 					e.printStackTrace();
+				}
+				
+				switch( result ) {
+				case Config.RESULT_CODE_SUCCESS:
+					OnSuccessUpdate();
+					break;
+					
+				case Config.RESULT_CODE_NOT_VALID_ACCESS_TOKEN:
+				case Config.RESULT_CODE_EXPIRED_ACCESS_TOKEN:
+					AuthManager.ShowAuthFailAlert(getActivity());
+					break;
+					
+				default:
+					Toast.makeText(getActivity(), "Server error...", Toast.LENGTH_SHORT).show();
+					break;
 				}
 			}
 		});
 	}
 	
-	private void onSuccess(JSONObject json) throws JSONException, ParseException {
+	private void OnSuccessGetFriendList(JSONObject json) throws JSONException, ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		Date localTime = new Date(System.currentTimeMillis());
 		
@@ -164,11 +197,7 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 		friendListAdapter.notifyDataSetChanged();
 	}
 
-	private void onFail(JSONObject json) {
-		
-	}
-	
-	void onSuccessUpdate() {
+	void OnSuccessUpdate() {
 		btnAlive.setOnClickListener(null);
 		
 		SharedPreferences pref = getActivity().getSharedPreferences("default", Activity.MODE_PRIVATE);

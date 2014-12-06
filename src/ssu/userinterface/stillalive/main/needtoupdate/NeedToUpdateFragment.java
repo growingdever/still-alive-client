@@ -1,8 +1,18 @@
 package ssu.userinterface.stillalive.main.needtoupdate;
 
+import java.util.Hashtable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import ssu.userinterface.stillalive.R;
+import ssu.userinterface.stillalive.common.AuthManager;
+import ssu.userinterface.stillalive.common.Config;
+import ssu.userinterface.stillalive.common.HTTPHelper;
 import ssu.userinterface.stillalive.common.TimeChecker;
+import ssu.userinterface.stillalive.common.HTTPHelper.OnResponseListener;
 import ssu.userinterface.stillalive.main.MainActivity;
+import ssu.userinterface.stillalive.main.friendlist.FriendListFragment;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -19,6 +29,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class NeedToUpdateFragment extends Fragment implements OnClickListener, AnimationListener {
 	
@@ -85,6 +96,48 @@ public class NeedToUpdateFragment extends Fragment implements OnClickListener, A
     }
 
     void OnClickButtonAlive() {
+    	UpdateToServer();
+	}
+	
+	void SetStateToMain() {
+		MainActivity parent = (MainActivity) getActivity();
+		parent.SetState(MainActivity.STATE_FRIEND_LIST);
+	}
+	
+	private void UpdateToServer(){
+		Hashtable<String, String> parameters = new Hashtable<String, String>();
+		parameters.put("access_token", getActivity().getSharedPreferences("default", Activity.MODE_PRIVATE).getString("accessToken", ""));
+		
+		HTTPHelper.GET(Config.HOST + "/update", parameters, new OnResponseListener() {
+			@Override
+			public void OnResponse(String response) {
+				int result = 0;
+				try {
+					JSONObject json = new JSONObject(response);
+					result = json.getInt("result");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				
+				switch( result ) {
+				case Config.RESULT_CODE_SUCCESS:
+					OnSuccessUpdate();
+					break;
+					
+				case Config.RESULT_CODE_NOT_VALID_ACCESS_TOKEN:
+				case Config.RESULT_CODE_EXPIRED_ACCESS_TOKEN:
+					AuthManager.ShowAuthFailAlert(getActivity());
+					break;
+					
+				default:
+					Toast.makeText(getActivity(), "Server error...", Toast.LENGTH_SHORT).show();
+					break;
+				}
+			}
+		});
+	}
+	
+	void OnSuccessUpdate() {
         SharedPreferences pref = getActivity().getSharedPreferences("default", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean("shouldUpdate", false);
@@ -92,11 +145,6 @@ public class NeedToUpdateFragment extends Fragment implements OnClickListener, A
 
 		TimeChecker.getInstance().setCurrentTime(getActivity());
 		SetStateToMain();
-	}
-	
-	void SetStateToMain() {
-		MainActivity parent = (MainActivity) getActivity();
-		parent.SetState(MainActivity.STATE_FRIEND_LIST);
 	}
 
 	@Override
