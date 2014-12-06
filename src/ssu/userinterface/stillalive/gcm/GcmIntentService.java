@@ -1,6 +1,7 @@
 package ssu.userinterface.stillalive.gcm;
 
 import ssu.userinterface.stillalive.R;
+import ssu.userinterface.stillalive.common.Config;
 import ssu.userinterface.stillalive.main.MainActivity;
 import ssu.userinterface.stillalive.main.inbox.InboxActivity;
 
@@ -12,7 +13,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 public class GcmIntentService extends IntentService {
 
@@ -30,15 +34,15 @@ public class GcmIntentService extends IntentService {
         Bundle extras = intent.getExtras();
 
         if (!extras.isEmpty()) {
-            String messageType = extras.getString("type");
-            if (messageType.equals("1")) {
+            int messageType = Integer.parseInt(extras.getString("type"));
+            if (messageType == Config.PUSH_MESSAGE_TYPE_POKE) {
                 SendUpdatingRequestNotification(extras.getString("senderUserID"));
 
                 SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putBoolean("shouldUpdate", true);
                 editor.commit();
-            } else if (extras.getString("type").equals("2")) {
+            } else if (messageType == Config.PUSH_MESSAGE_TYPE_POKE) {
                 SendFriendRequestNotification(extras.getString("senderUserID"));
             }
 
