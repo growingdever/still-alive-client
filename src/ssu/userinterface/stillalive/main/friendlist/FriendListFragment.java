@@ -179,10 +179,13 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 		JSONArray data = json.getJSONArray("data");
 		int length = data.length();
 		for(int i = 0 ; i < length ; ++i){
-			//{"id":2,"userID":"loki12","updatedAt":"2014-11-23T07:51:57.000Z"}
 			JSONObject item = data.getJSONObject(i);
 			String userID = item.getString("userID");
 			String stateMessage = item.getString("stateMessage");
+			String phoneNumber = "01000000000";
+			if( ! item.isNull("phoneNumber") ) {
+				phoneNumber = item.getString("phoneNumber"); 
+			}
 			
 			Date date = formatter.parse(item.getString("updatedAt"));
 			Date localeDate = new Date(date.getTime() + TimeZone.getDefault().getOffset(localTime.getTime()));
@@ -190,7 +193,7 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(localeDate);
 			
-			UserData person = new UserData(userID, "01012345678", stateMessage, calendar);
+			UserData person = new UserData(userID, phoneNumber, stateMessage, calendar);
 			friendListAdapter.add(person);
 		}
 		
