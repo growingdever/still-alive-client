@@ -7,12 +7,14 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="21" />
-
+    
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <permission
         android:name="ssu.userinterface.stillalive.permission.C2D_MESSAGE"
