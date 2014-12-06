@@ -123,18 +123,22 @@ public class MainActivity extends GCMActivity {
 			getActionBar().show();
 		}
 		
+		if( getFragmentManager().getBackStackEntryCount() > 0 ) {
+			getFragmentManager().popBackStack();
+		}
+		
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		transaction.replace(R.id.main_fragment_container, newFragment);
+		transaction.add(R.id.main_fragment_container, newFragment);
 		transaction.addToBackStack(null);
 		transaction.commit();
 	}
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() == 0) {
+        if (currentState == STATE_NEED_TO_UPDATE) {
             this.finish();
         } else {
-            getFragmentManager().popBackStack();
+            super.onBackPressed();
         }
     }
 
