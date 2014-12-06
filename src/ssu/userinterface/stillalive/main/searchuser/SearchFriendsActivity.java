@@ -155,6 +155,7 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 		SearchResultData data = _adapter.getItem(position);
 		if( data.GetIsFriend() ) {
 			Toast.makeText(getApplicationContext(), "It's your friend!", Toast.LENGTH_SHORT).show();
+			return;
 		}
 		else if( data.GetIsSent() ) {
 			// show cancel request dialog
@@ -174,7 +175,7 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 	    	@Override
 	        public void onClick(DialogInterface dialog, int which) {
 	    		SearchResultData data = _adapter.getItem(index);
-	    		SendReject(data);
+	    		SendCancel(data);
 	    		data.SetIsSent(false);
 	    		_adapter.notifyDataSetChanged();
 	        }
@@ -190,7 +191,7 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 	    .show();
 	}
 	
-	void SendReject(final SearchResultData data) {
+	void SendCancel(final SearchResultData data) {
 		Hashtable<String, String> parameters = new Hashtable<String, String>();
 		parameters.put("access_token", _accessToken);
 		parameters.put("req_id", data.GetReqID() + "");
@@ -239,6 +240,7 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 							switch( result ) {
 							case Config.RESULT_CODE_SUCCESS:
 								data.SetIsSent(true);
+								data.SetReqID(json.getInt("request_id"));
 								_adapter.notifyDataSetChanged();
 								break;
 								

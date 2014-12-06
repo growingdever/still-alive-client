@@ -34,5 +34,9 @@ public class SearchResultData {
 	public int GetReqID() {
 		return _reqID;
 	}
+	
+	public void SetReqID(int id) {
+		_reqID = id;
+	}
 
 }
