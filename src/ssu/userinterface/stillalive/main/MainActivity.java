@@ -19,7 +19,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewConfiguration;
 
+import java.lang.reflect.Field;
 import java.util.Hashtable;
 
 public class MainActivity extends GCMActivity {
@@ -36,6 +38,17 @@ public class MainActivity extends GCMActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		try {
+			ViewConfiguration config = ViewConfiguration.get(this);
+			Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+			if (menuKeyField != null) {
+				menuKeyField.setAccessible(true);
+				menuKeyField.setBoolean(config, false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
         _accessToken = pref.getString("accessToken", "");

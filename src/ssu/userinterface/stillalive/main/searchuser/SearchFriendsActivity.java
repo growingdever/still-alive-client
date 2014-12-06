@@ -1,5 +1,6 @@
 package ssu.userinterface.stillalive.main.searchuser;
 
+import java.lang.reflect.Field;
 import java.util.Hashtable;
 
 import org.json.JSONArray;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -43,6 +45,17 @@ public class SearchFriendsActivity extends Activity implements OnQueryTextListen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_friends);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		try {
+			ViewConfiguration config = ViewConfiguration.get(this);
+			Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+			if (menuKeyField != null) {
+				menuKeyField.setAccessible(true);
+				menuKeyField.setBoolean(config, false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
 		_accessToken = pref.getString("accessToken", "");		
