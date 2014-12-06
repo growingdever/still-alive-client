@@ -55,6 +55,11 @@
             android:name=".main.inbox.InboxActivity"
             android:parentActivityName=".main.MainActivity"
             android:theme="@style/AppBaseTheme"></activity>
+        
+        <activity
+            android:name=".main.SettingsActivity"
+            android:parentActivityName=".main.MainActivity"
+            android:theme="@style/AppBaseTheme"></activity>
 
         <receiver
             android:name=".gcm.GcmBroadcastReceiver"
