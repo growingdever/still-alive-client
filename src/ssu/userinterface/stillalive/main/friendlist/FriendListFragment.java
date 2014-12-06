@@ -162,12 +162,6 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 		}
 		
 		friendListAdapter.notifyDataSetChanged();
-
-
-        SharedPreferences pref = getActivity().getSharedPreferences("default", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("shouldUpdate", false);
-        editor.commit();
 	}
 
 	private void onFail(JSONObject json) {
@@ -176,6 +170,11 @@ public class FriendListFragment extends Fragment implements OnClickListener, OnI
 	
 	void onSuccessUpdate() {
 		btnAlive.setOnClickListener(null);
+		
+		SharedPreferences pref = getActivity().getSharedPreferences("default", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("shouldUpdate", false);
+        editor.commit();
 		
 		// start animation
 		Animation scaleAnimatiton = AnimationUtils.loadAnimation(this.getActivity(), R.anim.scale_alive_button_no_delay);
