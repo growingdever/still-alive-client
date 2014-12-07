@@ -111,15 +111,6 @@ public class DialogClickEvent extends DialogFragment {
 		HTTPHelper.GET(Config.HOST + "/users/poke", parameters, new OnResponseListener() {
 			@Override
 			public void OnResponse(String response) {
-				try {
-					JSONObject json = new JSONObject(response);
-					if (json.getInt("result") == 1) {
-						Toast.makeText(getActivity(), "Poked!", Toast.LENGTH_SHORT).show();
-					}else{
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
 			}
 		});
 	}

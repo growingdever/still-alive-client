@@ -37,14 +37,16 @@ public class GcmIntentService extends IntentService {
         if (!extras.isEmpty()) {
             int messageType = Integer.parseInt(extras.getString("type"));
             if (messageType == Config.PUSH_MESSAGE_TYPE_POKE) {
-           		SendUpdatingRequestNotification(extras.getString("senderUserID"));
+            	String senderID = extras.getString("senderUserID");
+           		SendUpdatingRequestNotification(senderID);
 
                 SharedPreferences pref = getSharedPreferences("default", MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putBoolean("shouldUpdate", true);
                 editor.commit();
-            } else if (messageType == Config.PUSH_MESSAGE_TYPE_POKE) {
-           		SendFriendRequestNotification(extras.getString("senderUserID"));
+            } else if (messageType == Config.PUSH_MESSAGE_TYPE_FRIEND_REQUEST) {
+            	String senderID = extras.getString("senderUserID");
+           		SendFriendRequestNotification(senderID);
             }
         }
 
@@ -52,13 +54,13 @@ public class GcmIntentService extends IntentService {
     }
 
     void SendUpdatingRequestNotification(String senderID) {
-    	boolean useNotification = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("notifications_setting", false);
+    	boolean useNotification = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("notifications_setting", true);
     	if( !useNotification ) {
     		return;
     	}
     	
         Uri ringtoneURI = Uri.parse(PreferenceManager.getDefaultSharedPreferences(this).getString("notifications_ringtone", ""));
-        boolean useVibrate = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("notifications_vibrate", false);
+        boolean useVibrate = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("notifications_vibrate", true);
         String msg = senderID + " want to know your safety";
         
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -87,13 +89,13 @@ public class GcmIntentService extends IntentService {
     }
 
     void SendFriendRequestNotification(String senderID) {
-    	boolean useNotification = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("notifications_setting", false);
+    	boolean useNotification = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("notifications_setting", true);
     	if( !useNotification ) {
     		return;
     	}
     	
     	Uri ringtoneURI = Uri.parse(PreferenceManager.getDefaultSharedPreferences(this).getString("notifications_ringtone", ""));
-    	boolean useVibrate = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("notifications_vibrate", false);
+    	boolean useVibrate = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("notifications_vibrate", true);
         String msg = senderID + " like to be your friend";
         
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
